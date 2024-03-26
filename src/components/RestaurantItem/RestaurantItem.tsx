@@ -1,7 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { FC } from 'react';
-import ClockIcon from './img/clock.svg?react';
-import WalletIcon from './img/wallet.svg?react';
+import ClockIcon from '../../icons/clock.svg?react';
+import WalletIcon from '../../icons/wallet.svg?react';
 
 interface Props {}
 
