@@ -1,17 +1,89 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button } from '../../components/Button';
 import { Tabs } from '../../components/Tabs';
 import { ImageList } from '../../components/ImageList';
-import { Menu } from '../../components/Menu';
 import CalendarIcon from '../../icons/calendar.svg?react';
 import WalletIcon from '../../icons/wallet20.svg?react';
 import InfoIcon from '../../icons/info20.svg?react';
 import { Input } from '../../components/Input';
 import { Select } from '../../components/Select';
+import { EditMenu } from '../../components/EditMenu';
+import {
+  EKitchenType,
+  IMenuPosition,
+  restaurantApi,
+} from '../../api/restaurantApi.ts';
+import { useFetch } from '../../hooks/useFetch.ts';
+import { useNavigate, useParams } from 'react-router-dom';
 
-interface Props {}
+export enum EMode {
+  Create,
+  Edit,
+}
 
-export const CreateEditRestaurant: FC<Props> = () => {
+interface Props {
+  mode: EMode;
+}
+
+export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [address, setAddress] = useState('');
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [cost, setCost] = useState<number>();
+  const [menu, setMenu] = useState<IMenuPosition[]>([]);
+  const [kitchen, setKitchen] = useState<EKitchenType>();
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [__, _, postRestaurant] = useFetch(async () => {
+    await (cost &&
+      restaurantApi.updateRestaurant({
+        Cost: cost,
+        StartWorkTimeUtc: start,
+        EndWorkTimeUtc: end,
+        Title: title,
+        KitchenType: EKitchenType.Russian,
+        Menu: menu,
+        Description: description,
+        Contact: {
+          Email: email,
+          Phone: phone,
+          Address: address,
+        },
+        ReservationThreshold: 0,
+      }));
+
+    navigate('/');
+  });
+
+  const [___, restaurant, fetchRestaurant] = useFetch(() =>
+    restaurantApi.getRestaurant(+id!),
+  );
+
+  useEffect(() => {
+    fetchRestaurant();
+  }, []);
+
+  useEffect(() => {
+    if (restaurant) {
+      setMenu(restaurant.Menu);
+      setCost(restaurant.Cost);
+      setEnd(restaurant.EndWorkTimeUtc);
+      setStart(restaurant.StartWorkTimeUtc);
+      setAddress(restaurant.Contact.Address);
+      setEmail(restaurant.Contact.Email);
+      setPhone(restaurant.Contact.Phone);
+      setTitle(restaurant.Title);
+      setDescription(restaurant.Description);
+      setKitchen(restaurant.KitchenType);
+    }
+  }, [restaurant]);
+
   return (
     <div
       className={
@@ -20,29 +92,64 @@ export const CreateEditRestaurant: FC<Props> = () => {
     >
       <div>
         <div className={'flex items-center gap-4'}>
-          <Input className={'h-11'} placeholder={'Название'} />
-          <Select onValueChange={() => console.log()} />
+          <Input
+            className={'h-11'}
+            placeholder={'Название'}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <Select
+            onValueChange={(value) => setKitchen(value as EKitchenType)}
+            value={kitchen || EKitchenType.Asian}
+          />
         </div>
         <div className={'mt-8 flex gap-16'}>
           <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>
             <WalletIcon className={'mt-0.5'} />
             <p>
-              Средний чек - <Input type={'number'} className={'w-16'} /> ₽
+              Средний чек -{' '}
+              <Input
+                type={'number'}
+                className={'w-16'}
+                value={cost}
+                onChange={(e) => setCost(+e.target.value)}
+              />
+              &nbsp; ₽
             </p>
             <CalendarIcon className={'mt-0.5'} />
             <p className={'grid grid-cols-2 gap-y-2'}>
               Открытие&nbsp;
-              <Input type={'time'} />
+              <Input
+                type={'time'}
+                value={start}
+                onChange={(e) => setStart(e.target.value)}
+              />
               Закрытие&nbsp;
-              <Input type={'time'} />
+              <Input
+                type={'time'}
+                value={end}
+                onChange={(e) => setEnd(e.target.value)}
+              />
             </p>
           </div>
           <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>
             <InfoIcon className={'mt-1'} />
             <p className={'grid grid-cols-1'}>
-              <Input placeholder={'Адрес'} />
-              <Input placeholder={'Телефон'} />
-              <Input placeholder={'Почта'} />
+              <Input
+                placeholder={'Адрес'}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+              <Input
+                placeholder={'Телефон'}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+              <Input
+                placeholder={'Почта'}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </p>
           </div>
         </div>
@@ -50,12 +157,19 @@ export const CreateEditRestaurant: FC<Props> = () => {
           rows={6}
           cols={65}
           className={'mt-8 w-max rounded-[5px] border border-black px-2 py-1.5'}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
-        <Button className={'mt-8 w-72'}>Изменить</Button>
+        <Button className={'mt-8 w-72'} onClick={postRestaurant}>
+          {mode == EMode.Create ? 'Создать' : 'Изменить'}
+        </Button>
       </div>
 
       <div className={'basis-1/2'}>
-        <Tabs tab1={<ImageList />} tab2={<Menu />} />
+        <Tabs
+          tab1={<ImageList />}
+          tab2={<EditMenu onChange={(menu) => setMenu(menu)} />}
+        />
       </div>
     </div>
   );

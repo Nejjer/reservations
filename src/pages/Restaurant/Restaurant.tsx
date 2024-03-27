@@ -9,13 +9,23 @@ import { Menu } from '../../components/Menu';
 import { useFetch } from '../../hooks/useFetch.ts';
 import { IRestaurant, restaurantApi } from '../../api/restaurantApi.ts';
 import { getKitchenName } from '../../utils/getKitchenName.ts';
+import { useNavigate, useParams } from 'react-router-dom';
+import { PATHS } from '../../utils/PATHS.ts';
 
 interface Props {}
 
 export const Restaurant: FC<Props> = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [loading, restaurant, fetchRestaurant] = useFetch<IRestaurant>(
-    restaurantApi.getRestaurant,
+    async () => {
+      return restaurantApi.getRestaurant(+id!);
+    },
   );
+
+  const handleClickEdit = () => {
+    navigate(`/${PATHS.restaurantEdit}/${id}`);
+  };
 
   useEffect(() => {
     fetchRestaurant();
@@ -33,7 +43,7 @@ export const Restaurant: FC<Props> = () => {
     >
       <div>
         <div className={'flex items-center gap-4'}>
-          <h1 className={'pb-4 text-5xl font-bold'}>{restaurant.Title}</h1>
+          <h1 className={'pb-4 text-4xl font-bold'}>{restaurant.Title}</h1>
           <p className={'py bg-green px-2'}>
             {getKitchenName(restaurant.KitchenType)}
           </p>
@@ -60,7 +70,9 @@ export const Restaurant: FC<Props> = () => {
           </div>
         </div>
         <article className={'mt-8'}>{restaurant.Description}</article>
-        <Button className={'mt-8 w-72'}>Изменить</Button>
+        <Button className={'mt-8 w-72'} onClick={handleClickEdit}>
+          Изменить
+        </Button>
       </div>
 
       <Tabs tab1={<ImageList />} tab2={<Menu positions={restaurant.Menu} />} />

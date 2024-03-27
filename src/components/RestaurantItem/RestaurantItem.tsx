@@ -2,14 +2,19 @@
 import { FC } from 'react';
 import ClockIcon from '../../icons/clock.svg?react';
 import WalletIcon from '../../icons/wallet.svg?react';
+import { IRestaurant } from '../../api/restaurantApi.ts';
 
-interface Props {}
+import { getKitchenName } from '../../utils/getKitchenName.ts';
+import { useNavigate } from 'react-router-dom';
 
-export const RestaurantItem: FC<Props> = () => {
+export const RestaurantItem: FC<IRestaurant> = (restaurant) => {
+  const navigate = useNavigate();
+
   return (
     <div
+      onClick={() => navigate(`restaurant/${restaurant.Id}`)}
       className={
-        'grid-cols-restaurantItem grid h-36 w-full gap-x-2 rounded-[5px] border border-black'
+        'grid h-36 w-full cursor-pointer grid-cols-restaurantItem gap-x-2 rounded-[5px] border border-black'
       }
     >
       <img
@@ -18,15 +23,17 @@ export const RestaurantItem: FC<Props> = () => {
         className={'block h-full'}
       />
       <div className={'h-full py-4'}>
-        <h3 className={'text-lg font-bold'}>Ресторан</h3>
-        <p className={'text-sm'}>Европейская, Авторская</p>
+        <h3 className={'text-lg font-bold'}>{restaurant.Title}</h3>
+        <p className={'text-sm'}>{getKitchenName(restaurant.KitchenType)}</p>
         <div className={'mt-2 flex text-sm'}>
           <ClockIcon />
-          <span>12:00 - 23:00</span>
+          <span>
+            {restaurant.StartWorkTimeUtc} - {restaurant.EndWorkTimeUtc}
+          </span>
         </div>
         <div className={'mt-1 flex text-sm'}>
           <WalletIcon />
-          <span>~2000 ₽</span>
+          <span>~{restaurant.Cost} ₽</span>
         </div>
       </div>
     </div>

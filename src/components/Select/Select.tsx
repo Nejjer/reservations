@@ -6,11 +6,17 @@ import { EKitchenType } from '../../api/restaurantApi.ts';
 
 interface Props {
   onValueChange: (value: string) => void;
+  value?: string;
+  defaultValue?: string;
 }
 
-export const Select: FC<Props> = ({ onValueChange }) => {
+export const Select: FC<Props> = ({ onValueChange, value, defaultValue }) => {
   return (
-    <RadixSelect.Root onValueChange={onValueChange}>
+    <RadixSelect.Root
+      onValueChange={onValueChange}
+      value={value}
+      defaultValue={defaultValue}
+    >
       <RadixSelect.Trigger
         className={
           'flex h-11 w-44 justify-between gap-2 rounded-[5px] border border-black p-2 data-[placeholder=]:text-black/40'
@@ -49,7 +55,7 @@ const SelectItem = forwardRef<
 >(({ children, ...props }, forwardedRef) => {
   return (
     <RadixSelect.Item
-      className={'flex w-44 border border-black bg-green p-2'}
+      className={'flex w-44 cursor-pointer border border-black bg-green p-2'}
       {...props}
       ref={forwardedRef}
     >
