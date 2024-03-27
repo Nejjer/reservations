@@ -8,15 +8,9 @@ interface Props
   children?: ReactNode;
 }
 
-export const Button: FC<Props> = ({ children, className, ...props }) => {
+export const IconButton: FC<Props> = ({ children, ...props }) => {
   return (
-    <button
-      className={
-        'text-1xl rounded-md bg-green p-1 text-center font-bold shadow-button active:shadow-none ' +
-        className
-      }
-      {...props}
-    >
+    <button className={'h-7 w-7 rounded-3xl bg-green'} {...props}>
       {children}
     </button>
   );

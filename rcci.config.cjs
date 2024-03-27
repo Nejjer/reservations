@@ -19,7 +19,8 @@ module.exports = {
                 },
                 style: {
                     name: 'styles.module.scss',
-                    optional: true
+                    optional: true,
+                    default: false
                 },
                 stories: {
                     name: '[name].stories.tsx',

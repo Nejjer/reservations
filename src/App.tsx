@@ -1,12 +1,12 @@
 import { Header } from './components/Header';
-import { Restaurant } from './pages/Restaurant';
+import { CreateEditRestaurant } from './pages/CreateEditRestaurant';
 
 function App() {
   return (
     <>
       <Header />
       <div className={'space-x-6'} />
-      <Restaurant />
+      <CreateEditRestaurant />
     </>
   );
 }
