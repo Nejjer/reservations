@@ -2,15 +2,12 @@ import { FC, forwardRef, ReactNode } from 'react';
 import * as RadixSelect from '@radix-ui/react-select';
 import { CheckIcon } from '@radix-ui/react-icons';
 import ArrowDown from '../../icons/arrowDown.svg?react';
+import { EKitchenType } from '../../api/restaurantApi.ts';
 
 interface Props {
   onValueChange: (value: string) => void;
 }
-enum KitchenType {
-  Russian = '0',
-  Asian = '1',
-  Indian = '2',
-}
+
 export const Select: FC<Props> = ({ onValueChange }) => {
   return (
     <RadixSelect.Root onValueChange={onValueChange}>
@@ -29,9 +26,13 @@ export const Select: FC<Props> = ({ onValueChange }) => {
         <RadixSelect.Content position={'popper'} className={'bg-white'}>
           <RadixSelect.Viewport>
             <RadixSelect.Group>
-              <SelectItem value={KitchenType.Russian}>Русская кухня</SelectItem>
-              <SelectItem value={KitchenType.Asian}>Азиатская кухня</SelectItem>
-              <SelectItem value={KitchenType.Indian}>
+              <SelectItem value={EKitchenType.Russian}>
+                Русская кухня
+              </SelectItem>
+              <SelectItem value={EKitchenType.Asian}>
+                Азиатская кухня
+              </SelectItem>
+              <SelectItem value={EKitchenType.Indian}>
                 Индийская кухня
               </SelectItem>
             </RadixSelect.Group>

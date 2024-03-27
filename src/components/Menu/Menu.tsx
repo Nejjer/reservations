@@ -1,10 +1,7 @@
 import { FC } from 'react';
-import { Input } from '../Input';
-import { Button } from '../Button';
+import { IMenuPosition } from '../../api/restaurantApi.ts';
 
-interface Props {}
-
-export const Menu: FC<Props> = () => {
+export const Menu: FC<{ positions: IMenuPosition[] }> = ({ positions }) => {
   return (
     <div className={'flex min-h-[450px] flex-col justify-between'}>
       {/*<ul className={'flex gap-x-2 border-b border-black p-2'}>*/}
@@ -22,27 +19,16 @@ export const Menu: FC<Props> = () => {
       {/*  </li>*/}
       {/*</ul>*/}
       <ul>
-        <li className={'flex justify-between border-b border-black px-3 py-4'}>
-          <div>Еда Name</div>
-          <div>100 ₽</div>
-        </li>
-
-        <li className={'flex justify-between border-b border-black px-3 py-4'}>
-          <div>Еда Name</div>
-          <div>100 ₽</div>
-        </li>
-
-        <li className={'flex justify-between border-b border-black px-3 py-4'}>
-          <div>Еда Name</div>
-          <div>100 ₽</div>
-        </li>
+        {positions.map((position, i) => (
+          <li
+            key={position.Title + i}
+            className={'flex justify-between border-b border-black px-3 py-4'}
+          >
+            <div>{position.Title}</div>
+            <div>{position.Cost} ₽</div>
+          </li>
+        ))}
       </ul>
-      <div className={'flex justify-between gap-2 border-t border-black p-2'}>
-        <Input placeholder={'Название'} className={'w-40'} />
-        <Input placeholder={'Цена'} type={'number'} className={'w-40'} />
-        <Input placeholder={'Весь/Гр'} type={'number'} className={'w-40'} />
-        <Button>Добавить</Button>
-      </div>
     </div>
   );
 };
