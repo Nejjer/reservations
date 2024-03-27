@@ -13,16 +13,13 @@ enum KitchenType {
 }
 export const Select: FC<Props> = ({ onValueChange }) => {
   return (
-    <RadixSelect.Root
-      onValueChange={onValueChange}
-      defaultValue={KitchenType.Russian}
-    >
+    <RadixSelect.Root onValueChange={onValueChange}>
       <RadixSelect.Trigger
         className={
-          'flex h-11 w-44 justify-between gap-2 rounded-[5px] border border-black p-2'
+          'flex h-11 w-44 justify-between gap-2 rounded-[5px] border border-black p-2 data-[placeholder=]:text-black/40'
         }
       >
-        <RadixSelect.Value placeholder={'Кухня'} />
+        <RadixSelect.Value placeholder={'Выберите кухню'} />
         <RadixSelect.Icon className={'mt-1'}>
           <ArrowDown />
         </RadixSelect.Icon>

@@ -13,7 +13,7 @@ export const Tabs: FC<Props> = ({ tab1, tab2 }) => {
   return (
     <DefaultTabs.Root
       defaultValue='tab1'
-      className={'border border-black xl:w-10/12'}
+      className={'w-full border border-black'}
     >
       <DefaultTabs.List className={'flex h-8 text-center text-xl'}>
         <DefaultTabs.Trigger value='tab1' className={triggerClasses}>
