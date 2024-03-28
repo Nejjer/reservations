@@ -40,14 +40,16 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [__, _, postRestaurant] = useFetch(async () => {
     await (cost &&
-      restaurantApi.updateRestaurant(id, {
+      kitchen &&
+      restaurantApi.updateRestaurant(+id!, {
         cost: cost,
         startWorkTime: start,
         endWorkTime: end,
         title: title,
-        kitchenType: (+EKitchenType.Russian) as any,
+        kitchenType: +kitchen as never,
         menu: menu,
         description: description,
         contact: {
@@ -61,6 +63,7 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
     navigate('/');
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [___, restaurant, fetchRestaurant] = useFetch(() =>
     restaurantApi.getRestaurant(+id!),
   );
@@ -72,7 +75,7 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
   useEffect(() => {
     if (restaurant) {
       console.log(restaurant.endWorkTime);
-      
+
       setMenu(restaurant.menu);
       setCost(restaurant.cost);
       setEnd(restaurant.endWorkTime);
@@ -170,7 +173,7 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
       <div className={'basis-1/2'}>
         <Tabs
           tab1={<ImageList />}
-          tab2={<EditMenu onChange={(menu) => setMenu(menu)} />}
+          tab2={<EditMenu onChange={(menu) => setMenu(menu)} menu={menu} />}
         />
       </div>
     </div>

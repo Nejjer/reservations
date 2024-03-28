@@ -1,5 +1,5 @@
 import { axiosInstance, ID } from './axiosInstance.ts';
-import { getId } from './faker.ts';
+import { faker, getId } from './faker.ts';
 
 export interface ICreateRestaurantDto {
   title: string;
@@ -14,13 +14,13 @@ export interface ICreateRestaurantDto {
 }
 
 export interface IMenuPosition {
-  Title: string;
-  Cost: number;
-  Weight: string;
+  title: string;
+  cost: number;
+  weight: string;
 }
 
 export interface IRestaurant extends ICreateRestaurantDto {
-  Id: ID;
+  id: ID;
 }
 
 interface IContact {
@@ -34,43 +34,44 @@ export enum EKitchenType {
   Indian = '2',
 }
 
-const RESTAURANT = {
-  Title: 'Ресторан 1',
-  Description:
+const RESTAURANT: IRestaurant = {
+  title: 'Ресторан 1',
+  description:
     'Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба ',
-  KitchenType: EKitchenType.Russian,
-  Contact: {
-    Address: 'Екатеринбург улица Пушкина дом Колотушкина',
-    Email: 'example@example.com',
-    Phone: '+7 987 222 22-22',
+  kitchenType: EKitchenType.Russian,
+  contact: {
+    address: 'Екатеринбург улица Пушкина дом Колотушкина',
+    email: 'example@example.com',
+    phone: '+7 987 222 22-22',
   },
-  EndWorkTime: '20:00',
-  Id: getId(),
-  ReservationThreshold: 0,
-  StartWorkTime: '10:00',
-  Menu: [
-    { Cost: 100, Title: 'Title', Weight: '150' },
-    { Cost: 100, Title: 'Title', Weight: "150" },
+  endWorkTime: '20:00',
+  id: getId(),
+  reservationThreshold: 0,
+  startWorkTime: '10:00',
+  menu: [
+    { cost: 100, title: 'Title', weight: '150' },
+    { cost: 100, title: 'Title', weight: '150' },
   ],
-  Cost: 4000,
+  cost: 4000,
 };
 
 class RestaurantApi {
   public async getRestaurant(id: ID): Promise<IRestaurant> {
-    //return await faker<IRestaurant>(RESTAURANT);
-    return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
-      .data;
+    console.log(id);
+    return await faker<IRestaurant>(RESTAURANT);
+    // return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
+    //   .data;
   }
 
   public async getRestaurants(): Promise<IRestaurant[]> {
-    return (await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)).data;
+    //return (await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)).data;
 
-    // return await faker<IRestaurant[]>([
-    //   { ...RESTAURANT },
-    //   { ...RESTAURANT, Id: getId() },
-    //   { ...RESTAURANT, Id: getId() },
-    //   { ...RESTAURANT, Id: getId() },
-    // ]);
+    return await faker<IRestaurant[]>([
+      { ...RESTAURANT },
+      { ...RESTAURANT, id: getId() },
+      { ...RESTAURANT, id: getId() },
+      { ...RESTAURANT, id: getId() },
+    ]);
   }
 
   public async createRestaurant(
@@ -85,7 +86,8 @@ class RestaurantApi {
     restaurant: ICreateRestaurantDto,
   ): Promise<void> {
     //await faker(restaurant);
-    return (await axiosInstance.put(`/admin/restaurants/${id}`, restaurant)).data;
+    return (await axiosInstance.put(`/admin/restaurants/${id}`, restaurant))
+      .data;
   }
 }
 

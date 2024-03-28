@@ -6,21 +6,19 @@ import { Menu } from '../Menu';
 
 interface Props {
   onChange: (menu: IMenuPosition[]) => void;
+  menu: IMenuPosition[];
 }
 
-export const EditMenu: FC<Props> = ({ onChange }) => {
-  const [menu, setMenu] = useState<IMenuPosition[]>([]);
+export const EditMenu: FC<Props> = ({ onChange, menu }) => {
   const [cost, setCost] = useState<number>();
-  const [weight, setWeight] = useState<number>();
+  const [weight, setWeight] = useState('');
   const [title, setTitle] = useState('');
 
   const isValid = cost && weight && title;
   const handleAddClick = () => {
-    isValid && setMenu([...menu, { Cost: cost, Title: title, Weight: weight }]);
-    isValid &&
-      onChange([...menu, { Cost: cost, Title: title, Weight: weight }]);
+    isValid && onChange([...menu, { cost, title, weight }]);
     setCost(0);
-    setWeight(0);
+    setWeight('');
     setTitle('');
   };
 
@@ -42,11 +40,10 @@ export const EditMenu: FC<Props> = ({ onChange }) => {
           onChange={(e) => setCost(+e.target.value)}
         />
         <Input
-          placeholder={'Весь/Гр'}
-          type={'number'}
+          placeholder={'Весь/Кол-во'}
           className={'w-40'}
           value={weight}
-          onChange={(e) => setWeight(+e.target.value)}
+          onChange={(e) => setWeight(e.target.value)}
         />
         <Button disabled={!isValid} onClick={handleAddClick}>
           Добавить
