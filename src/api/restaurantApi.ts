@@ -1,5 +1,5 @@
 import { axiosInstance, ID } from './axiosInstance.ts';
-import { faker, getId } from './faker.ts';
+import { getId } from './faker.ts';
 
 export interface ICreateRestaurantDto {
   title: string;
@@ -58,20 +58,20 @@ const RESTAURANT: IRestaurant = {
 class RestaurantApi {
   public async getRestaurant(id: ID): Promise<IRestaurant> {
     console.log(id);
-    return await faker<IRestaurant>(RESTAURANT);
-    // return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
-    //   .data;
+    //return await faker<IRestaurant>(RESTAURANT);
+    return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
+      .data;
   }
 
   public async getRestaurants(): Promise<IRestaurant[]> {
-    //return (await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)).data;
+    return (await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)).data;
 
-    return await faker<IRestaurant[]>([
-      { ...RESTAURANT },
-      { ...RESTAURANT, id: getId() },
-      { ...RESTAURANT, id: getId() },
-      { ...RESTAURANT, id: getId() },
-    ]);
+    // return await faker<IRestaurant[]>([
+    //   { ...RESTAURANT },
+    //   { ...RESTAURANT, id: getId() },
+    //   { ...RESTAURANT, id: getId() },
+    //   { ...RESTAURANT, id: getId() },
+    // ]);
   }
 
   public async createRestaurant(

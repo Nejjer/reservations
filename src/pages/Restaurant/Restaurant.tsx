@@ -35,7 +35,7 @@ export const Restaurant: FC<Props> = () => {
     return null;
   }
   console.log(restaurant);
-  
+
   return (
     <div
       className={
@@ -50,7 +50,11 @@ export const Restaurant: FC<Props> = () => {
           </p>
         </div>
         <div className={'mt-8 flex gap-16'}>
-          <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>
+          <div
+            className={
+              'grid min-w-[200px] grid-cols-restaurantInfo gap-x-5 gap-y-4'
+            }
+          >
             <WalletIcon className={'mt-0.5'} />
             <p>Средний чек - {restaurant.cost} ₽</p>
             <CalendarIcon className={'mt-0.5'} />

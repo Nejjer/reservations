@@ -35,16 +35,15 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
   const [email, setEmail] = useState('');
   const [cost, setCost] = useState<number>();
   const [menu, setMenu] = useState<IMenuPosition[]>([]);
-  const [kitchen, setKitchen] = useState<EKitchenType>();
+  const [kitchen, setKitchen] = useState<EKitchenType>(EKitchenType.Asian);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [__, _, postRestaurant] = useFetch(async () => {
-    await (cost &&
-      kitchen &&
-      restaurantApi.updateRestaurant(+id!, {
+    if (cost && kitchen) {
+      const rest = {
         cost: cost,
         startWorkTime: start,
         endWorkTime: end,
@@ -58,8 +57,12 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           address: address,
         },
         reservationThreshold: 0,
-      }));
+      };
 
+      mode == EMode.Edit
+        ? await restaurantApi.updateRestaurant(+id!, rest)
+        : await restaurantApi.createRestaurant(rest);
+    }
     navigate('/');
   });
 
@@ -69,7 +72,7 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
   );
 
   useEffect(() => {
-    fetchRestaurant();
+    mode == EMode.Edit && fetchRestaurant();
   }, []);
 
   useEffect(() => {
@@ -98,18 +101,22 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
       <div>
         <div className={'flex items-center gap-4'}>
           <Input
-            className={'h-11'}
+            className={'!h-11'}
             placeholder={'Название'}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <Select
             onValueChange={(value) => setKitchen(value as EKitchenType)}
-            value={kitchen || EKitchenType.Asian}
+            value={kitchen}
           />
         </div>
         <div className={'mt-8 flex gap-16'}>
-          <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>
+          <div
+            className={
+              'grid min-w-[200px] grid-cols-restaurantInfo gap-x-5 gap-y-4'
+            }
+          >
             <WalletIcon className={'mt-0.5'} />
             <p>
               Средний чек -{' '}
