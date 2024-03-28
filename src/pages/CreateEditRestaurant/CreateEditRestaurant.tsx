@@ -42,7 +42,9 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [__, _, postRestaurant] = useFetch(async () => {
-    if (cost && kitchen) {
+    console.log('clicked');
+    
+    if (cost) {
       const rest = {
         cost: cost,
         startWorkTime: start,
@@ -77,7 +79,7 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
 
   useEffect(() => {
     if (restaurant) {
-      console.log(restaurant.endWorkTime);
+      console.log(restaurant);
 
       setMenu(restaurant.menu);
       setCost(restaurant.cost);

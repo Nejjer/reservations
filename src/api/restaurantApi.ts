@@ -29,9 +29,9 @@ interface IContact {
   address: string;
 }
 export enum EKitchenType {
-  Russian = '0',
-  Asian = '1',
-  Indian = '2',
+  Russian = 0,
+  Asian = 1,
+  Indian = 2,
 }
 
 const RESTAURANT: IRestaurant = {
