@@ -25,11 +25,11 @@ export const Menu: FC<{ positions: IMenuPosition[] }> = ({ positions }) => {
       <ul>
         {positions.map((position, i) => (
           <li
-            key={position.Title + i}
+            key={position.title + i}
             className={'flex justify-between border-b border-black px-3 py-4'}
           >
-            <div>{position.Title}</div>
-            <div>{position.Cost} ₽</div>
+            <div>{position.title}</div>
+            <div>{position.cost} ₽</div>
           </li>
         ))}
       </ul>

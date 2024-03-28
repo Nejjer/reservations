@@ -2,15 +2,15 @@ import { axiosInstance, ID } from './axiosInstance.ts';
 import { getId } from './faker.ts';
 
 export interface ICreateRestaurantDto {
-  Title: string;
-  Description: string;
-  StartWorkTime: string;
-  EndWorkTime: string;
-  Contact: IContact;
-  KitchenType: EKitchenType;
-  ReservationThreshold: number;
-  Menu: IMenuPosition[];
-  Cost: number;
+  title: string;
+  description: string;
+  startWorkTime: string;
+  endWorkTime: string;
+  contact: IContact;
+  kitchenType: EKitchenType;
+  reservationThreshold: number;
+  menu: IMenuPosition[];
+  cost: number;
 }
 
 export interface IMenuPosition {
@@ -24,9 +24,9 @@ export interface IRestaurant extends ICreateRestaurantDto {
 }
 
 interface IContact {
-  Email: string;
-  Phone: string;
-  Address: string;
+  email: string;
+  phone: string;
+  address: string;
 }
 export enum EKitchenType {
   Russian = '0',
@@ -81,10 +81,11 @@ class RestaurantApi {
   }
 
   public async updateRestaurant(
+    id: number,
     restaurant: ICreateRestaurantDto,
   ): Promise<void> {
     //await faker(restaurant);
-    return (await axiosInstance.put(`/admin/restaurants`, restaurant)).data;
+    return (await axiosInstance.put(`/admin/restaurants/${id}`, restaurant)).data;
   }
 }
 

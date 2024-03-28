@@ -34,7 +34,8 @@ export const Restaurant: FC<Props> = () => {
   if (loading || !restaurant) {
     return null;
   }
-
+  console.log(restaurant);
+  
   return (
     <div
       className={
@@ -43,39 +44,39 @@ export const Restaurant: FC<Props> = () => {
     >
       <div>
         <div className={'flex items-center gap-4'}>
-          <h1 className={'pb-4 text-4xl font-bold'}>{restaurant.Title}</h1>
+          <h1 className={'pb-4 text-4xl font-bold'}>{restaurant.title}</h1>
           <p className={'py bg-green px-2'}>
-            {getKitchenName(restaurant.KitchenType)}
+            {getKitchenName(restaurant.kitchenType)}
           </p>
         </div>
         <div className={'mt-8 flex gap-16'}>
           <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>
             <WalletIcon className={'mt-0.5'} />
-            <p>Средний чек - {restaurant.Cost} ₽</p>
+            <p>Средний чек - {restaurant.cost} ₽</p>
             <CalendarIcon className={'mt-0.5'} />
             <p className={'grid grid-cols-2 gap-y-2'}>
               Открытие&nbsp;
-              <p>{restaurant.StartWorkTime}</p>
+              <p>{restaurant.startWorkTime}</p>
               Закрытие&nbsp;
-              <p>{restaurant.EndWorkTime}</p>
+              <p>{restaurant.endWorkTime}</p>
             </p>
           </div>
           <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>
             <InfoIcon className={'mt-1'} />
             <p>
-              {restaurant.Contact.Address} <br />
-              Телефон: {restaurant.Contact.Phone} <br />
-              {restaurant.Contact.Email}
+              {restaurant.contact.address} <br />
+              Телефон: {restaurant.contact.phone} <br />
+              {restaurant.contact.email}
             </p>
           </div>
         </div>
-        <article className={'mt-8'}>{restaurant.Description}</article>
+        <article className={'mt-8'}>{restaurant.description}</article>
         <Button className={'mt-8 w-72'} onClick={handleClickEdit}>
           Изменить
         </Button>
       </div>
 
-      <Tabs tab1={<ImageList />} tab2={<Menu positions={restaurant.Menu} />} />
+      <Tabs tab1={<ImageList />} tab2={<Menu positions={restaurant.menu} />} />
     </div>
   );
 };

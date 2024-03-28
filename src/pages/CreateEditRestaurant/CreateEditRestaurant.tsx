@@ -42,20 +42,20 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
 
   const [__, _, postRestaurant] = useFetch(async () => {
     await (cost &&
-      restaurantApi.updateRestaurant({
-        Cost: cost,
-        StartWorkTime: start,
-        EndWorkTime: end,
-        Title: title,
-        KitchenType: EKitchenType.Russian,
-        Menu: menu,
-        Description: description,
-        Contact: {
-          Email: email,
-          Phone: phone,
-          Address: address,
+      restaurantApi.updateRestaurant(id, {
+        cost: cost,
+        startWorkTime: start,
+        endWorkTime: end,
+        title: title,
+        kitchenType: EKitchenType.Russian,
+        menu: menu,
+        description: description,
+        contact: {
+          email: email,
+          phone: phone,
+          address: address,
         },
-        ReservationThreshold: 0,
+        reservationThreshold: 0,
       }));
 
     navigate('/');
@@ -71,16 +71,16 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
 
   useEffect(() => {
     if (restaurant) {
-      setMenu(restaurant.Menu);
-      setCost(restaurant.Cost);
-      setEnd(restaurant.EndWorkTime);
-      setStart(restaurant.StartWorkTime);
-      setAddress(restaurant.Contact.Address);
-      setEmail(restaurant.Contact.Email);
-      setPhone(restaurant.Contact.Phone);
-      setTitle(restaurant.Title);
-      setDescription(restaurant.Description);
-      setKitchen(restaurant.KitchenType);
+      setMenu(restaurant.menu);
+      setCost(restaurant.cost);
+      setEnd(restaurant.endWorkTime);
+      setStart(restaurant.startWorkTime);
+      setAddress(restaurant.contact.address);
+      setEmail(restaurant.contact.email);
+      setPhone(restaurant.contact.phone);
+      setTitle(restaurant.title);
+      setDescription(restaurant.description);
+      setKitchen(restaurant.kitchenType);
     }
   }, [restaurant]);
 
