@@ -42,8 +42,6 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [__, _, postRestaurant] = useFetch(async () => {
-    console.log('clicked');
-    
     if (cost) {
       const rest = {
         cost: cost,
@@ -72,6 +70,11 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
   const [___, restaurant, fetchRestaurant] = useFetch(() =>
     restaurantApi.getRestaurant(+id!),
   );
+
+  const handleDeleteRestaurant = async () => {
+    await restaurantApi.deleteRestaurant(+id!);
+    navigate('/');
+  };
 
   useEffect(() => {
     mode == EMode.Edit && fetchRestaurant();
@@ -109,8 +112,10 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
             onChange={(e) => setTitle(e.target.value)}
           />
           <Select
-            onValueChange={(value) => setKitchen(value as EKitchenType)}
-            value={kitchen}
+            onValueChange={(value) =>
+              setKitchen(value as unknown as EKitchenType)
+            }
+            value={kitchen as unknown as string}
           />
         </div>
         <div className={'mt-8 flex gap-16'}>
@@ -174,9 +179,19 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <Button className={'mt-8 w-72'} onClick={postRestaurant}>
-          {mode == EMode.Create ? 'Создать' : 'Изменить'}
-        </Button>
+        <div className={'flex gap-4'}>
+          <Button className={'mt-8 w-72'} onClick={postRestaurant}>
+            {mode == EMode.Create ? 'Создать' : 'Изменить'}
+          </Button>
+          {mode === EMode.Edit && (
+            <Button
+              className={'bg-red mt-8 w-72'}
+              onClick={handleDeleteRestaurant}
+            >
+              Удалить
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className={'basis-1/2'}>

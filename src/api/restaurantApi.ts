@@ -1,5 +1,5 @@
 import { axiosInstance, ID } from './axiosInstance.ts';
-import { getId } from './faker.ts';
+import { faker, getId } from './faker.ts';
 
 export interface ICreateRestaurantDto {
   title: string;
@@ -58,9 +58,9 @@ const RESTAURANT: IRestaurant = {
 class RestaurantApi {
   public async getRestaurant(id: ID): Promise<IRestaurant> {
     console.log(id);
-    //return await faker<IRestaurant>(RESTAURANT);
-    return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
-      .data;
+    return await faker<IRestaurant>(RESTAURANT);
+    // return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
+    //   .data;
   }
 
   public async getRestaurants(): Promise<IRestaurant[]> {
@@ -88,6 +88,11 @@ class RestaurantApi {
     //await faker(restaurant);
     return (await axiosInstance.put(`/admin/restaurants/${id}`, restaurant))
       .data;
+  }
+
+  public async deleteRestaurant(id: ID) {
+    //await faker(id);
+    await axiosInstance.delete(`admin/restaurants/${id}`);
   }
 }
 
