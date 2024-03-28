@@ -4,8 +4,8 @@ import { getId } from './faker.ts';
 export interface ICreateRestaurantDto {
   Title: string;
   Description: string;
-  StartWorkTimeUtc: string;
-  EndWorkTimeUtc: string;
+  StartWorkTime: string;
+  EndWorkTime: string;
   Contact: IContact;
   KitchenType: EKitchenType;
   ReservationThreshold: number;
@@ -16,7 +16,7 @@ export interface ICreateRestaurantDto {
 export interface IMenuPosition {
   Title: string;
   Cost: number;
-  Weight: number;
+  Weight: string;
 }
 
 export interface IRestaurant extends ICreateRestaurantDto {
@@ -44,13 +44,13 @@ const RESTAURANT = {
     Email: 'example@example.com',
     Phone: '+7 987 222 22-22',
   },
-  EndWorkTimeUtc: '20:00',
+  EndWorkTime: '20:00',
   Id: getId(),
   ReservationThreshold: 0,
-  StartWorkTimeUtc: '10:00',
+  StartWorkTime: '10:00',
   Menu: [
-    { Cost: 100, Title: 'Title', Weight: 150 },
-    { Cost: 100, Title: 'Title', Weight: 150 },
+    { Cost: 100, Title: 'Title', Weight: '150' },
+    { Cost: 100, Title: 'Title', Weight: "150" },
   ],
   Cost: 4000,
 };

@@ -44,8 +44,8 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
     await (cost &&
       restaurantApi.updateRestaurant({
         Cost: cost,
-        StartWorkTimeUtc: start,
-        EndWorkTimeUtc: end,
+        StartWorkTime: start,
+        EndWorkTime: end,
         Title: title,
         KitchenType: EKitchenType.Russian,
         Menu: menu,
@@ -73,8 +73,8 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
     if (restaurant) {
       setMenu(restaurant.Menu);
       setCost(restaurant.Cost);
-      setEnd(restaurant.EndWorkTimeUtc);
-      setStart(restaurant.StartWorkTimeUtc);
+      setEnd(restaurant.EndWorkTime);
+      setStart(restaurant.StartWorkTime);
       setAddress(restaurant.Contact.Address);
       setEmail(restaurant.Contact.Email);
       setPhone(restaurant.Contact.Phone);

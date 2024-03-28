@@ -55,9 +55,9 @@ export const Restaurant: FC<Props> = () => {
             <CalendarIcon className={'mt-0.5'} />
             <p className={'grid grid-cols-2 gap-y-2'}>
               Открытие&nbsp;
-              <p>{restaurant.StartWorkTimeUtc}</p>
+              <p>{restaurant.StartWorkTime}</p>
               Закрытие&nbsp;
-              <p>{restaurant.EndWorkTimeUtc}</p>
+              <p>{restaurant.EndWorkTime}</p>
             </p>
           </div>
           <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>
