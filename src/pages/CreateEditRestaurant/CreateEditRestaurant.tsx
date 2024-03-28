@@ -47,7 +47,7 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
         startWorkTime: start,
         endWorkTime: end,
         title: title,
-        kitchenType: EKitchenType.Russian,
+        kitchenType: (+EKitchenType.Russian) as any,
         menu: menu,
         description: description,
         contact: {
@@ -71,6 +71,8 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
 
   useEffect(() => {
     if (restaurant) {
+      console.log(restaurant.endWorkTime);
+      
       setMenu(restaurant.menu);
       setCost(restaurant.cost);
       setEnd(restaurant.endWorkTime);
