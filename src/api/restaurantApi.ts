@@ -58,9 +58,9 @@ const RESTAURANT: IRestaurant = {
 class RestaurantApi {
   public async getRestaurant(id: ID): Promise<IRestaurant> {
     console.log(id);
-    return await faker<IRestaurant>(RESTAURANT);
-    // return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
-    //   .data;
+    // return await faker<IRestaurant>(RESTAURANT);
+    return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
+      .data;
   }
 
   public async getRestaurants(): Promise<IRestaurant[]> {
