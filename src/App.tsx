@@ -4,10 +4,11 @@ import { RestaurantList } from './pages/RestaurantList';
 import { Restaurant } from './pages/Restaurant';
 import { CreateEditRestaurant, EMode } from './pages/CreateEditRestaurant';
 import { PATHS } from './utils/PATHS.ts';
+import { WithStore } from './stores/WithStore.tsx';
 
 function App() {
   return (
-    <>
+    <WithStore>
       <Header />
       <div className={'space-x-6'} />
       <Routes>
@@ -22,7 +23,7 @@ function App() {
           element={<CreateEditRestaurant mode={EMode.Create} />}
         />
       </Routes>
-    </>
+    </WithStore>
   );
 }
 

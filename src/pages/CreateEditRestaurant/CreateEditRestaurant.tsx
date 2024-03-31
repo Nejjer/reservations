@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { Button } from '../../components/Button';
 import { Tabs } from '../../components/Tabs';
 import { ImageList } from '../../components/ImageList';
@@ -8,13 +8,11 @@ import InfoIcon from '../../icons/info20.svg?react';
 import { Input } from '../../components/Input';
 import { Select } from '../../components/Select';
 import { EditMenu } from '../../components/EditMenu';
-import {
-  EKitchenType,
-  IMenuPosition,
-  restaurantApi,
-} from '../../api/restaurantApi.ts';
-import { useFetch } from '../../hooks/useFetch.ts';
+import { ICreateRestaurantDto } from '../../api/restaurantApi.ts';
 import { useNavigate, useParams } from 'react-router-dom';
+import { observer } from 'mobx-react';
+import { EditTables } from '../../components/EditTables';
+import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
 
 export enum EMode {
   Create,
@@ -25,72 +23,32 @@ interface Props {
   mode: EMode;
 }
 
-export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [address, setAddress] = useState('');
-  const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [cost, setCost] = useState<number>();
-  const [menu, setMenu] = useState<IMenuPosition[]>([]);
-  const [kitchen, setKitchen] = useState<EKitchenType>(EKitchenType.Asian);
-
+const CreateEditRestaurant: FC<Props> = ({ mode }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [__, _, postRestaurant] = useFetch(async () => {
-    if (cost) {
-      const rest = {
-        cost: cost,
-        startWorkTime: start,
-        endWorkTime: end,
-        title: title,
-        kitchenType: +kitchen as never,
-        menu: menu,
-        description: description,
-        contact: {
-          email: email,
-          phone: phone,
-          address: address,
-        },
-        reservationThreshold: 0,
-      };
-
-      mode == EMode.Edit
-        ? await restaurantApi.updateRestaurant(+id!, rest)
-        : await restaurantApi.createRestaurant(rest);
-    }
-    navigate('/');
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [___, restaurant, fetchRestaurant] = useFetch(() =>
-    restaurantApi.getRestaurant(+id!),
-  );
+  const {
+    appStore: { restaurantStore },
+  } = useContext<AppStoreContext>(StoreCtx);
 
   useEffect(() => {
-    mode == EMode.Edit && fetchRestaurant();
+    mode === EMode.Edit && id && restaurantStore.getRestaurant(+id);
+    return () => restaurantStore.clearRestaurant();
   }, []);
 
-  useEffect(() => {
-    if (restaurant) {
-      console.log(restaurant);
+  const handleSaveRestaurant = () => {
+    restaurantStore.saveRestaurant(mode, id);
+  };
 
-      setMenu(restaurant.menu);
-      setCost(restaurant.cost);
-      setEnd(restaurant.endWorkTime);
-      setStart(restaurant.startWorkTime);
-      setAddress(restaurant.contact.address);
-      setEmail(restaurant.contact.email);
-      setPhone(restaurant.contact.phone);
-      setTitle(restaurant.title);
-      setDescription(restaurant.description);
-      setKitchen(restaurant.kitchenType);
-    }
-  }, [restaurant]);
+  const handleUpdateField = (
+    field: keyof ICreateRestaurantDto,
+    value: ICreateRestaurantDto[keyof ICreateRestaurantDto],
+  ) => {
+    const rest = { ...restaurantStore.restaurant };
+    rest[field] = value as never;
+    restaurantStore.updateRestaurant(rest);
+  };
+
+  const { restaurant } = restaurantStore;
 
   return (
     <div
@@ -103,14 +61,12 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           <Input
             className={'!h-11'}
             placeholder={'Название'}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={restaurant.title}
+            onChange={(e) => handleUpdateField('title', e.target.value)}
           />
           <Select
-            onValueChange={(value) =>
-              setKitchen(value as unknown as EKitchenType)
-            }
-            value={kitchen as unknown as string}
+            onValueChange={(value) => handleUpdateField('kitchenType', value)}
+            value={restaurant.kitchenType as never as string}
           />
         </div>
         <div className={'mt-8 flex gap-16'}>
@@ -125,8 +81,8 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
               <Input
                 type={'number'}
                 className={'w-16'}
-                value={cost}
-                onChange={(e) => setCost(+e.target.value)}
+                value={restaurant.cost}
+                onChange={(e) => handleUpdateField('cost', +e.target.value)}
               />
               &nbsp; ₽
             </p>
@@ -135,14 +91,18 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
               Открытие&nbsp;
               <Input
                 type={'time'}
-                value={start}
-                onChange={(e) => setStart(e.target.value)}
+                value={restaurant.startWorkTime}
+                onChange={(e) =>
+                  handleUpdateField('startWorkTime', e.target.value)
+                }
               />
               Закрытие&nbsp;
               <Input
                 type={'time'}
-                value={end}
-                onChange={(e) => setEnd(e.target.value)}
+                value={restaurant.endWorkTime}
+                onChange={(e) =>
+                  handleUpdateField('endWorkTime', e.target.value)
+                }
               />
             </p>
           </div>
@@ -151,18 +111,33 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
             <p className={'grid grid-cols-1'}>
               <Input
                 placeholder={'Адрес'}
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                value={restaurant.contact.address}
+                onChange={(e) =>
+                  handleUpdateField('contact', {
+                    ...restaurant.contact,
+                    address: e.target.value,
+                  })
+                }
               />
               <Input
                 placeholder={'Телефон'}
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={restaurant.contact.phone}
+                onChange={(e) =>
+                  handleUpdateField('contact', {
+                    ...restaurant.contact,
+                    phone: e.target.value,
+                  })
+                }
               />
               <Input
                 placeholder={'Почта'}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={restaurant.contact.email}
+                onChange={(e) =>
+                  handleUpdateField('contact', {
+                    ...restaurant.contact,
+                    email: e.target.value,
+                  })
+                }
               />
             </p>
           </div>
@@ -171,11 +146,11 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           rows={6}
           cols={65}
           className={'mt-8 w-max rounded-[5px] border border-black px-2 py-1.5'}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={restaurant.description}
+          onChange={(e) => handleUpdateField('description', e.target.value)}
         />
         <div className={'flex gap-6'}>
-          <Button className={'mt-8 w-44'} onClick={postRestaurant}>
+          <Button className={'mt-8 w-44'} onClick={handleSaveRestaurant}>
             {mode == EMode.Create ? 'Создать' : 'Сохранить'}
           </Button>
           <Button className={'bg-blue mt-8 w-44'} onClick={() => navigate(-1)}>
@@ -187,9 +162,18 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
       <div className={'basis-1/2'}>
         <Tabs
           tab1={<ImageList />}
-          tab2={<EditMenu onChange={(menu) => setMenu(menu)} menu={menu} />}
+          tab2={
+            <EditMenu
+              onChange={(menu) => handleUpdateField('menu', menu)}
+              menu={restaurant.menu}
+            />
+          }
+          tab3={<EditTables />}
         />
       </div>
     </div>
   );
 };
+
+const connected = observer(CreateEditRestaurant);
+export { connected as CreateEditRestaurant };
