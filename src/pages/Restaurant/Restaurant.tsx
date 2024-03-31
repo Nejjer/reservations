@@ -11,6 +11,7 @@ import { IRestaurant, restaurantApi } from '../../api/restaurantApi.ts';
 import { getKitchenName } from '../../utils/getKitchenName.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATHS } from '../../utils/PATHS.ts';
+import { Dialog } from '../../components/Dialog';
 
 interface Props {}
 
@@ -92,6 +93,14 @@ export const Restaurant: FC<Props> = () => {
           </Button>
         </div>
       </div>
+      <Dialog
+        title={'Создать столик'}
+        onConfirm={() => console.log()}
+        trigger={<div>asdjkklasjdlakd</div>}
+        onCancel={() => console.log()}
+      >
+        ыдлвралдоывралдорывлоавыд
+      </Dialog>
       <Tabs tab1={<ImageList />} tab2={<Menu positions={restaurant.menu} />} />
     </div>
   );

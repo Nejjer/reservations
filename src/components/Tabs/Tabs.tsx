@@ -4,9 +4,10 @@ import * as DefaultTabs from '@radix-ui/react-tabs';
 interface Props {
   tab1: ReactNode;
   tab2: ReactNode;
+  tab3: ReactNode;
 }
 
-export const Tabs: FC<Props> = ({ tab1, tab2 }) => {
+export const Tabs: FC<Props> = ({ tab1, tab2, tab3 }) => {
   const triggerClasses =
     'first:border-r border-b border-black data-[state=active]:bg-yellow w-full';
 
@@ -22,9 +23,13 @@ export const Tabs: FC<Props> = ({ tab1, tab2 }) => {
         <DefaultTabs.Trigger value='tab2' className={triggerClasses}>
           Меню
         </DefaultTabs.Trigger>
+        <DefaultTabs.Trigger value='tab3' className={triggerClasses}>
+          Столики
+        </DefaultTabs.Trigger>
       </DefaultTabs.List>
       <DefaultTabs.Content value='tab1'>{tab1}</DefaultTabs.Content>
       <DefaultTabs.Content value='tab2'>{tab2}</DefaultTabs.Content>
+      <DefaultTabs.Content value='tab3'>{tab3}</DefaultTabs.Content>
     </DefaultTabs.Root>
   );
 };

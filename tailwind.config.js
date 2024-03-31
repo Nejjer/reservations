@@ -10,6 +10,15 @@ export default {
         restaurantItem: '144px 1fr',
         restaurantInfo: '20px 1fr',
       },
+      animation: {
+        overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+      },
+      keyframes: {
+        overlayShow: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+      },
       colors: {
         black: '#052136',
         green: '#7EEC96',
