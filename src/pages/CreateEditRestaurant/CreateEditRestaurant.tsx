@@ -71,11 +71,6 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
     restaurantApi.getRestaurant(+id!),
   );
 
-  const handleDeleteRestaurant = async () => {
-    await restaurantApi.deleteRestaurant(+id!);
-    navigate('/');
-  };
-
   useEffect(() => {
     mode == EMode.Edit && fetchRestaurant();
   }, []);
@@ -179,18 +174,13 @@ export const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <div className={'flex gap-4'}>
-          <Button className={'mt-8 w-72'} onClick={postRestaurant}>
-            {mode == EMode.Create ? 'Создать' : 'Изменить'}
+        <div className={'flex gap-6'}>
+          <Button className={'mt-8 w-44'} onClick={postRestaurant}>
+            {mode == EMode.Create ? 'Создать' : 'Сохранить'}
           </Button>
-          {mode === EMode.Edit && (
-            <Button
-              className={'bg-red mt-8 w-72'}
-              onClick={handleDeleteRestaurant}
-            >
-              Удалить
-            </Button>
-          )}
+          <Button className={'bg-blue mt-8 w-44'} onClick={() => navigate(-1)}>
+            Отмена
+          </Button>
         </div>
       </div>
 

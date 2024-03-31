@@ -1,4 +1,4 @@
-import { axiosInstance, ID } from './axiosInstance.ts';
+import { ID } from './axiosInstance.ts';
 import { faker, getId } from './faker.ts';
 
 export interface ICreateRestaurantDto {
@@ -58,41 +58,41 @@ const RESTAURANT: IRestaurant = {
 class RestaurantApi {
   public async getRestaurant(id: ID): Promise<IRestaurant> {
     console.log(id);
-    // return await faker<IRestaurant>(RESTAURANT);
-    return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
-      .data;
+    return await faker<IRestaurant>(RESTAURANT);
+    //return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
+    //  .data;
   }
 
   public async getRestaurants(): Promise<IRestaurant[]> {
-    return (await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)).data;
+    //return (await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)).data;
 
-    // return await faker<IRestaurant[]>([
-    //   { ...RESTAURANT },
-    //   { ...RESTAURANT, id: getId() },
-    //   { ...RESTAURANT, id: getId() },
-    //   { ...RESTAURANT, id: getId() },
-    // ]);
+    return await faker<IRestaurant[]>([
+      { ...RESTAURANT },
+      { ...RESTAURANT, id: getId() },
+      { ...RESTAURANT, id: getId() },
+      { ...RESTAURANT, id: getId() },
+    ]);
   }
 
   public async createRestaurant(
     restaurant: ICreateRestaurantDto,
   ): Promise<void> {
-    //await faker(restaurant);
-    return (await axiosInstance.post(`/admin/restaurants`, restaurant)).data;
+    await faker(restaurant);
+    //return (await axiosInstance.post(`/admin/restaurants`, restaurant)).data;
   }
 
   public async updateRestaurant(
     id: number,
     restaurant: ICreateRestaurantDto,
   ): Promise<void> {
-    //await faker(restaurant);
-    return (await axiosInstance.put(`/admin/restaurants/${id}`, restaurant))
-      .data;
+    await faker({ restaurant, id });
+    // return (await axiosInstance.put(`/admin/restaurants/${id}`, restaurant))
+    //   .data;
   }
 
   public async deleteRestaurant(id: ID) {
-    //await faker(id);
-    await axiosInstance.delete(`admin/restaurants/${id}`);
+    await faker(id);
+    // await axiosInstance.delete(`admin/restaurants/${id}`);
   }
 }
 

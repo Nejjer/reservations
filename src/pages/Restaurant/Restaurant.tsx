@@ -23,6 +23,11 @@ export const Restaurant: FC<Props> = () => {
     },
   );
 
+  const handleDeleteRestaurant = async () => {
+    await restaurantApi.deleteRestaurant(+id!);
+    navigate('/');
+  };
+
   const handleClickEdit = () => {
     navigate(`/${PATHS.restaurantEdit}/${id}`);
   };
@@ -75,11 +80,18 @@ export const Restaurant: FC<Props> = () => {
           </div>
         </div>
         <article className={'mt-8'}>{restaurant.description}</article>
-        <Button className={'mt-8 w-72'} onClick={handleClickEdit}>
-          Изменить
-        </Button>
+        <div className={'flex gap-6'}>
+          <Button className={'mt-8 w-44'} onClick={handleClickEdit}>
+            Редактировать
+          </Button>
+          <Button
+            className={'mt-8 w-44 bg-red'}
+            onClick={handleDeleteRestaurant}
+          >
+            Удалить
+          </Button>
+        </div>
       </div>
-
       <Tabs tab1={<ImageList />} tab2={<Menu positions={restaurant.menu} />} />
     </div>
   );

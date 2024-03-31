@@ -15,6 +15,7 @@ export default {
         green: '#7EEC96',
         yellow: '#FFC95F',
         red: '#F392BA',
+        blue: '#74B3E1',
       },
       boxShadow: {
         button: '2px 2px 0px 0px #052136',
