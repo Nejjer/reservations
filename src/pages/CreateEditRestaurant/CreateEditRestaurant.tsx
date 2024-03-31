@@ -11,8 +11,8 @@ import { EditMenu } from '../../components/EditMenu';
 import { ICreateRestaurantDto } from '../../api/restaurantApi.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { EditTables } from '../../components/EditTables';
 import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
+import { Tables } from '../../components/Tables';
 
 export enum EMode {
   Create,
@@ -168,7 +168,7 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
               menu={restaurant.menu}
             />
           }
-          tab3={<EditTables />}
+          tab3={<Tables />}
         />
       </div>
     </div>
