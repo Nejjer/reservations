@@ -59,6 +59,6 @@ export class CreateEditRestaurantStore {
   }
 
   public clearRestaurant() {
-    this.updateRestaurant(emptyRestaurant);
+    this.updateRestaurant({ ...emptyRestaurant });
   }
 }

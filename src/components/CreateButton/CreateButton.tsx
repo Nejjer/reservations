@@ -9,7 +9,7 @@ export const CreateButton: FC<
     <Button
       onClick={onClick}
       {...props}
-      className={'h-12 w-12 rounded-[50%] ' + className}
+      className={'h-12 w-12 !rounded-[50%] ' + className}
     >
       <PlusIcon />
     </Button>

@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode } from 'react';
 import * as DialogDefault from '@radix-ui/react-dialog';
 import { Button } from '../Button';
 import CloseIcon from '../../icons/close.svg?react';
@@ -9,6 +9,8 @@ interface Props {
   title: ReactNode;
   onConfirm: () => Promise<void>;
   onCancel: () => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export const Dialog: FC<Props> = ({
@@ -17,15 +19,15 @@ export const Dialog: FC<Props> = ({
   title,
   onConfirm,
   onCancel,
+  open,
+  onOpenChange,
 }) => {
-  const [open, setOpen] = useState(false);
-
   return (
-    <DialogDefault.Root open={open} onOpenChange={setOpen}>
+    <DialogDefault.Root open={open} onOpenChange={onOpenChange}>
       <DialogDefault.Trigger asChild>{trigger}</DialogDefault.Trigger>
       <DialogDefault.Portal>
         <DialogDefault.Overlay
-          className={'animate-overlayShow fixed inset-0 bg-black/10'}
+          className={'fixed inset-0 animate-overlayShow bg-black/10'}
         />
         <DialogDefault.Content
           className={
@@ -38,7 +40,9 @@ export const Dialog: FC<Props> = ({
           <DialogDefault.Description>{children}</DialogDefault.Description>
           <div className={'mt-6 flex justify-between'}>
             <DialogDefault.Close asChild>
-              <Button onClick={() => onConfirm().then(() => setOpen(false))}>
+              <Button
+                onClick={() => onConfirm().then(() => onOpenChange(false))}
+              >
                 Сохранить
               </Button>
             </DialogDefault.Close>

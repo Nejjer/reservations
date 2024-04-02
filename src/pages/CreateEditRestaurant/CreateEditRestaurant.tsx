@@ -153,7 +153,7 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           <Button className={'mt-8 w-44'} onClick={handleSaveRestaurant}>
             {mode == EMode.Create ? 'Создать' : 'Сохранить'}
           </Button>
-          <Button className={'bg-blue mt-8 w-44'} onClick={() => navigate(-1)}>
+          <Button className={'mt-8 w-44 bg-blue'} onClick={() => navigate(-1)}>
             Отмена
           </Button>
         </div>
@@ -168,7 +168,9 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
               menu={restaurant.menu}
             />
           }
-          tab3={<Tables />}
+          tab3={
+            mode == EMode.Edit && id && <Tables restaurantId={+id} canEdit />
+          }
         />
       </div>
     </div>
