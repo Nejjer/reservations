@@ -38,12 +38,12 @@ export class CreateEditRestaurantStore {
 
   public async saveRestaurant(mode: EMode, id?: string) {
     this.loading = true;
-    if (!id || !this.restaurant) {
+    if ((!id && mode === EMode.Edit) || !this.restaurant) {
       console.error('Не смогли сохранить ресторан');
       return;
     }
     if (mode === EMode.Edit) {
-      await restaurantApi.updateRestaurant(+id, this.restaurant);
+      id && (await restaurantApi.updateRestaurant(+id, this.restaurant));
     } else {
       await restaurantApi.createRestaurant(this.restaurant);
     }

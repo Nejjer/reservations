@@ -80,13 +80,15 @@ export const Tables: FC<Props> = ({ canEdit, restaurantId }) => {
             <PersonIcon />
             <span className={'ml-1'}>{table.places.length}</span>
             <span className={'grow px-6'}>{table.title}</span>
-            <CanIcon
-              className={'cursor-pointer'}
-              onClick={(e) => {
-                handleDeleteTable(table.id);
-                e.stopPropagation();
-              }}
-            />
+            {canEdit && (
+              <CanIcon
+                className={'cursor-pointer'}
+                onClick={(e) => {
+                  handleDeleteTable(table.id);
+                  e.stopPropagation();
+                }}
+              />
+            )}
           </li>
         ))}
       </ul>

@@ -49,8 +49,11 @@ export const EditTable: FC<Props> = ({ table, onEditTable }) => {
           />
         </h5>
         <ul>
-          {table.places.map((place) => (
-            <li className={'flex gap-2 border-t border-black/30  px-1 py-1'}>
+          {table.places.map((place, index) => (
+            <li
+              key={place.title + index}
+              className={'flex gap-2 border-t border-black/30  px-1 py-1'}
+            >
               <span className={'shrink'}>{place.number}</span>
               <span className={'grow'}>{place.title}</span>
               <PencilIcon className={'cursor-pointer'} />

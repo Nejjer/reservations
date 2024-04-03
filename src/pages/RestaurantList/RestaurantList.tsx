@@ -34,7 +34,7 @@ export const RestaurantList: FC<Props> = () => {
 
       <div className={'grid grid-cols-3 gap-x-6 gap-y-6'}>
         {restaurants.map((restaurant) => (
-          <RestaurantItem {...restaurant} />
+          <RestaurantItem key={restaurant.id} {...restaurant} />
         ))}
       </div>
     </div>
