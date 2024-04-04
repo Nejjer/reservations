@@ -25,23 +25,24 @@ export const EditMenu: FC<Props> = ({ onChange, menu }) => {
   return (
     <div className={'flex h-[560px] flex-col justify-between'}>
       <Menu positions={menu} />
-      <div className={'flex justify-between gap-1 border-t border-black p-2'}>
+      <div
+        className={
+          'col-auto grid grid-cols-4 justify-between gap-1 border-t border-black p-2'
+        }
+      >
         <Input
           placeholder={'Название'}
-          className={'w-[120px]'}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Input
           placeholder={'Цена'}
           type={'number'}
-          className={'w-20'}
           value={cost}
           onChange={(e) => setCost(+e.target.value)}
         />
         <Input
           placeholder={'Весь/Кол-во'}
-          className={'w-20'}
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
         />

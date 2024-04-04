@@ -634,6 +634,10 @@ input[type="number"]::-webkit-inner-spin-button,
   top: 0.25rem;
 }
 
+.col-auto {
+  grid-column: auto;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -885,6 +889,10 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .grid-cols-restaurantItem {
   grid-template-columns: 144px 1fr;
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .flex-col {
