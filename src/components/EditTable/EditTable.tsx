@@ -3,10 +3,10 @@ import { Input } from '../Input';
 import { Checkbox } from '../Checkbox';
 import PencilIcon from '../../icons/pencil.svg?react';
 import CanIcon from '../../icons/can.svg?react';
-import CancelIcon from '../../icons/cancel.svg?react';
-import CheckIcon from '../../icons/check.svg?react';
+
 import PlusIcon from '../../icons/plus.svg?react';
 import { ICreateTableDto } from '../../api/tableApi.ts';
+import { InputPlace } from './InputPlace';
 
 interface Props {
   table: ICreateTableDto;
@@ -16,14 +16,34 @@ interface Props {
 export const EditTable: FC<Props> = ({ table, onEditTable }) => {
   const [number, setNumber] = useState<number>();
   const [title, setTitle] = useState('');
-  const [isAddable, setIsAddable] = useState(false);
-
+  const [isAdding, setIsAdding] = useState(false);
+  const [indexIsEdit, setIndexIsEdit] = useState(-1);
   const handleAddPlace = () => {
     number &&
       title &&
       onEditTable({ ...table, places: [...table.places, { title, number }] });
     setTitle('');
     setNumber(undefined);
+    setIndexIsEdit(-1);
+  };
+
+  const handleEditPlace = () => {
+    if (number && title) {
+      const newPlaces = [...table.places].map((place, index) =>
+        index === indexIsEdit ? { title, number } : place,
+      );
+
+      number && title && onEditTable({ ...table, places: newPlaces });
+      setIndexIsEdit(-1);
+      setTitle('');
+      setNumber(undefined);
+    }
+  };
+
+  const handleDeletePlace = (i: number) => {
+    const newPlaces = [...table.places];
+    newPlaces.splice(i, 1);
+    onEditTable({ ...table, places: newPlaces });
   };
 
   return (
@@ -45,47 +65,53 @@ export const EditTable: FC<Props> = ({ table, onEditTable }) => {
           <p className={'mb-2'}>Места </p>
           <PlusIcon
             className={'h-6 cursor-pointer'}
-            onClick={() => setIsAddable(true)}
+            onClick={() => {
+              setIsAdding(true);
+              setIndexIsEdit(-1);
+            }}
           />
         </h5>
         <ul>
           {table.places.map((place, index) => (
-            <li
-              key={place.title + index}
-              className={'flex gap-2 border-t border-black/30  px-1 py-1'}
-            >
-              <span className={'shrink'}>{place.number}</span>
-              <span className={'grow'}>{place.title}</span>
-              <PencilIcon className={'cursor-pointer'} />
-              <CanIcon className={'cursor-pointer'} />
-            </li>
+            <>
+              {indexIsEdit === index ? (
+                <InputPlace
+                  key={place.title + index}
+                  title={title}
+                  setTitle={setTitle}
+                  setNumber={setNumber}
+                  handleAddPlace={handleEditPlace}
+                  setIsAdding={() => setIndexIsEdit(-1)}
+                />
+              ) : (
+                <li
+                  key={place.title + index}
+                  className={'flex gap-2 border-t border-black/30  px-1 py-1'}
+                >
+                  <span className={'shrink'}>{place.number}</span>
+                  <span className={'grow'}>{place.title}</span>
+                  <PencilIcon
+                    className={'cursor-pointer'}
+                    onClick={() => setIndexIsEdit(index)}
+                  />
+                  <CanIcon
+                    className={'cursor-pointer'}
+                    onClick={() => handleDeletePlace(index)}
+                  />
+                </li>
+              )}
+            </>
           ))}
         </ul>
-        {isAddable && (
-          <div
-            className={
-              'flex items-center gap-4 rounded-[4px] bg-black/25 px-1 py-1'
-            }
-          >
-            <Input
-              placeholder={'№'}
-              className={'h-6 w-8 shrink border-none px-1'}
-              value={number}
-              type={'number'}
-              onChange={(e) => setNumber(+e.target.value)}
-            />
-            <Input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder={'Название места'}
-              className={'h-6 grow border-none'}
-            />
-            <CheckIcon className={'cursor-pointer'} onClick={handleAddPlace} />
-            <CancelIcon
-              className={'cursor-pointer'}
-              onClick={() => setIsAddable(false)}
-            />
-          </div>
+        {isAdding && indexIsEdit === -1 && (
+          <InputPlace
+            number={number}
+            setIsAdding={setIsAdding}
+            setNumber={setNumber}
+            title={title}
+            setTitle={setTitle}
+            handleAddPlace={handleAddPlace}
+          />
         )}
       </div>
     </div>
