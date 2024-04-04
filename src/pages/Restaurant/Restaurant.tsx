@@ -94,7 +94,7 @@ export const Restaurant: FC<Props> = () => {
         </div>
       </div>
       <Tabs
-        tab1={<ImageList />}
+        tab1={<ImageList pictures={restaurant.pictures} />}
         tab2={<Menu positions={restaurant.menu} />}
         tab3={<Tables restaurantId={+id!} />}
       />

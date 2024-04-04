@@ -1,5 +1,4 @@
 import { axiosInstance, ID } from './axiosInstance.ts';
-import { getId } from './faker.ts';
 
 export interface ICreateRestaurantDto {
   title: string;
@@ -11,6 +10,12 @@ export interface ICreateRestaurantDto {
   reservationThreshold: number;
   menu: IMenuPosition[];
   cost: number;
+  pictures: RestaurantPictureDto[];
+}
+
+export interface RestaurantPictureDto {
+  url: string;
+  title: string;
 }
 
 export interface IMenuPosition {
@@ -34,26 +39,26 @@ export enum EKitchenType {
   Indian = 2,
 }
 
-const RESTAURANT: IRestaurant = {
-  title: 'Ресторан 1',
-  description:
-    'Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба ',
-  kitchenType: EKitchenType.Russian,
-  contact: {
-    address: 'Екатеринбург улица Пушкина дом Колотушкина',
-    email: 'example@example.com',
-    phone: '+7 987 222 22-22',
-  },
-  endWorkTime: '20:00',
-  id: getId(),
-  reservationThreshold: 0,
-  startWorkTime: '10:00',
-  menu: [
-    { cost: 100, title: 'Title', weight: '150' },
-    { cost: 100, title: 'Title', weight: '150' },
-  ],
-  cost: 4000,
-};
+// const RESTAURANT: IRestaurant = {
+//   title: 'Ресторан 1',
+//   description:
+//     'Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба Какое-то описание рыба ',
+//   kitchenType: EKitchenType.Russian,
+//   contact: {
+//     address: 'Екатеринбург улица Пушкина дом Колотушкина',
+//     email: 'example@example.com',
+//     phone: '+7 987 222 22-22',
+//   },
+//   endWorkTime: '20:00',
+//   id: getId(),
+//   reservationThreshold: 0,
+//   startWorkTime: '10:00',
+//   menu: [
+//     { cost: 100, title: 'Title', weight: '150' },
+//     { cost: 100, title: 'Title', weight: '150' },
+//   ],
+//   cost: 4000,
+// };
 
 class RestaurantApi {
   public async getRestaurant(id: ID): Promise<IRestaurant> {

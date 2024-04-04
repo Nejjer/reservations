@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 export const RestaurantItem: FC<IRestaurant> = (restaurant) => {
   const navigate = useNavigate();
   console.log(restaurant);
-  
+
   return (
     <div
       onClick={() => navigate(`restaurant/${restaurant.id}`)}
@@ -19,7 +19,11 @@ export const RestaurantItem: FC<IRestaurant> = (restaurant) => {
       }
     >
       <img
-        src='/public/restaurant.jpeg'
+        src={
+          restaurant.pictures[0]?.url
+            ? restaurant.pictures[0].url
+            : '/public/restaurant.jpeg'
+        }
         alt='Фото ресторана'
         className={'block h-full'}
       />

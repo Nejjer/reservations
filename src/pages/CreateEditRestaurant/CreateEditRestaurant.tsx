@@ -162,7 +162,13 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
 
       <div className={'basis-1/2'}>
         <Tabs
-          tab1={<ImageList />}
+          tab1={
+            <ImageList
+              canEdit
+              onChange={(pictures) => handleUpdateField('pictures', pictures)}
+              pictures={restaurant.pictures}
+            />
+          }
           tab2={
             <EditMenu
               onChange={(menu) => handleUpdateField('menu', menu)}
