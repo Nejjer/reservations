@@ -7,7 +7,7 @@ import {
 import { ID } from '../api/axiosInstance.ts';
 import { EMode } from '../pages/CreateEditRestaurant';
 
-const emptyRestaurant = {
+const emptyRestaurant: ICreateRestaurantDto = {
   title: '',
   cost: 0,
   contact: {
@@ -21,6 +21,7 @@ const emptyRestaurant = {
   kitchenType: EKitchenType.Asian,
   startWorkTime: '',
   reservationThreshold: 0,
+  pictures: [],
 };
 
 export class CreateEditRestaurantStore {
