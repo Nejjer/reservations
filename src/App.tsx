@@ -4,6 +4,7 @@ import { RestaurantList } from './pages/RestaurantList';
 import { Restaurant } from './pages/Restaurant';
 import { CreateEditRestaurant, EMode } from './pages/CreateEditRestaurant';
 import { PATHS } from './utils/PATHS.ts';
+import { Profile } from './pages/Profile';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           />
           <Route path='/*' element={<RestaurantList />} />
           <Route path={'restaurant/:id'} element={<Restaurant />} />
+          <Route path={PATHS.profile} element={<Profile />} />
         </Routes>
       </div>
     </>

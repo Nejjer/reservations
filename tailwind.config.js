@@ -9,6 +9,7 @@ export default {
       gridTemplateColumns: {
         restaurantItem: '144px 1fr',
         restaurantInfo: '20px 1fr',
+        profileInfo: '20px 1fr',
       },
       animation: {
         overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',

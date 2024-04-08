@@ -3,4 +3,5 @@ export const PATHS = {
   restaurantEdit: 'restaurant/edit',
   restaurantCreate: 'restaurant/create',
   auth: 'auth',
+  profile: 'profile',
 };
