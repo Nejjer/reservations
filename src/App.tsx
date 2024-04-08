@@ -12,6 +12,24 @@ function App() {
       <Header />
       <div className={'space-x-6'} />
       <Routes>
+        <Route
+          path='/admin/*'
+          element={
+            <Routes>
+              <Route path='/*' element={<RestaurantList isAdmin />} />
+              <Route path={'restaurant/:id'} element={<Restaurant isAdmin />} />
+              <Route
+                path={PATHS.restaurantEdit + '/:id'}
+                element={<CreateEditRestaurant mode={EMode.Edit} />}
+              />
+              <Route
+                path={PATHS.restaurantCreate}
+                element={<CreateEditRestaurant mode={EMode.Create} />}
+              />
+            </Routes>
+          }
+        />
+
         <Route path='/*' element={<RestaurantList />} />
         <Route path={'restaurant/:id'} element={<Restaurant />} />
         <Route

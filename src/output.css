@@ -610,6 +610,10 @@ input[type="number"]::-webkit-inner-spin-button,
   left: 50%;
 }
 
+.right-1 {
+  right: 0.25rem;
+}
+
 .right-4 {
   right: 1rem;
 }
@@ -618,20 +622,16 @@ input[type="number"]::-webkit-inner-spin-button,
   right: 10px;
 }
 
+.top-1 {
+  top: 0.25rem;
+}
+
 .top-1\/2 {
   top: 50%;
 }
 
 .top-\[10px\] {
   top: 10px;
-}
-
-.right-1 {
-  right: 0.25rem;
-}
-
-.top-1 {
-  top: 0.25rem;
 }
 
 .col-auto {
@@ -714,6 +714,10 @@ input[type="number"]::-webkit-inner-spin-button,
   height: 9rem;
 }
 
+.h-5 {
+  height: 1.25rem;
+}
+
 .h-6 {
   height: 1.5rem;
 }
@@ -746,10 +750,6 @@ input[type="number"]::-webkit-inner-spin-button,
   height: 100vh;
 }
 
-.h-5 {
-  height: 1.25rem;
-}
-
 .max-h-\[600px\] {
   max-height: 600px;
 }
@@ -774,16 +774,16 @@ input[type="number"]::-webkit-inner-spin-button,
   width: 11rem;
 }
 
+.w-5 {
+  width: 1.25rem;
+}
+
 .w-7 {
   width: 1.75rem;
 }
 
 .w-8 {
   width: 2rem;
-}
-
-.w-\[120px\] {
-  width: 120px;
 }
 
 .w-\[18px\] {
@@ -803,32 +803,12 @@ input[type="number"]::-webkit-inner-spin-button,
   width: max-content;
 }
 
-.w-5 {
-  width: 1.25rem;
-}
-
-.w-14 {
-  width: 3.5rem;
-}
-
-.w-\[none\] {
-  width: none;
-}
-
 .min-w-\[200px\] {
   min-width: 200px;
 }
 
 .max-w-full {
   max-width: 100%;
-}
-
-.max-w-none {
-  max-width: none;
-}
-
-.flex-shrink {
-  flex-shrink: 1;
 }
 
 .shrink {
@@ -883,16 +863,16 @@ input[type="number"]::-webkit-inner-spin-button,
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .grid-cols-restaurantInfo {
   grid-template-columns: 20px 1fr;
 }
 
 .grid-cols-restaurantItem {
   grid-template-columns: 144px 1fr;
-}
-
-.grid-cols-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -982,16 +962,16 @@ input[type="number"]::-webkit-inner-spin-button,
   border-radius: 4px;
 }
 
+.rounded-\[50\%\] {
+  border-radius: 50%;
+}
+
 .rounded-\[5px\] {
   border-radius: 5px;
 }
 
 .rounded-md {
   border-radius: 0.375rem;
-}
-
-.rounded-\[50\%\] {
-  border-radius: 50%;
 }
 
 .border {
@@ -1168,10 +1148,6 @@ input[type="number"]::-webkit-inner-spin-button,
   --tw-shadow: 2px 2px 0px 0px #052136;
   --tw-shadow-colored: 2px 2px 0px 0px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.filter {
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .first\:border-r:first-child {

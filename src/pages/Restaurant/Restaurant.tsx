@@ -13,9 +13,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { PATHS } from '../../utils/PATHS.ts';
 import { Tables } from '../../components/Tables';
 
-interface Props {}
+interface Props {
+  isAdmin?: boolean;
+}
 
-export const Restaurant: FC<Props> = () => {
+export const Restaurant: FC<Props> = ({ isAdmin }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, restaurant, fetchRestaurant] = useFetch<IRestaurant>(
@@ -82,15 +84,19 @@ export const Restaurant: FC<Props> = () => {
         </div>
         <article className={'mt-8'}>{restaurant.description}</article>
         <div className={'flex gap-6'}>
-          <Button className={'mt-8 w-44'} onClick={handleClickEdit}>
-            Редактировать
-          </Button>
-          <Button
-            className={'mt-8 w-44 bg-red'}
-            onClick={handleDeleteRestaurant}
-          >
-            Удалить
-          </Button>
+          {isAdmin && (
+            <>
+              <Button className={'mt-8 w-44'} onClick={handleClickEdit}>
+                Редактировать
+              </Button>
+              <Button
+                className={'mt-8 w-44 bg-red'}
+                onClick={handleDeleteRestaurant}
+              >
+                Удалить
+              </Button>
+            </>
+          )}
         </div>
       </div>
       <Tabs

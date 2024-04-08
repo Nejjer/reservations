@@ -6,9 +6,11 @@ import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../utils/PATHS.ts';
 
-interface Props {}
+interface Props {
+  isAdmin?: boolean;
+}
 
-export const RestaurantList: FC<Props> = () => {
+export const RestaurantList: FC<Props> = ({ isAdmin }) => {
   const [loading, restaurants, fetchRestaurants] = useFetch(
     restaurantApi.getRestaurants,
   );
@@ -27,9 +29,11 @@ export const RestaurantList: FC<Props> = () => {
     <div className={'container mt-6'}>
       <div className={'flex items-center gap-6'}>
         <h1 className={'pb-4 text-4xl font-bold'}>Рестораны Екатеринбурга</h1>
-        <Button onClick={() => navigate(PATHS.restaurantCreate)}>
-          Создать ресторан
-        </Button>
+        {isAdmin && (
+          <Button onClick={() => navigate(PATHS.restaurantCreate)}>
+            Создать ресторан
+          </Button>
+        )}
       </div>
 
       <div className={'grid grid-cols-3 gap-x-6 gap-y-6'}>
