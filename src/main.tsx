@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Auth } from './pages/Auth';
 import { WithStore } from './stores/WithStore.tsx';
 import { PATHS } from './utils/PATHS.ts';
+import { Toast } from './components/Toast';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
@@ -13,6 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
         <Route path={'/*'} element={<App />} />
       </Routes>
+      <Toast />
     </WithStore>
   </BrowserRouter>,
 );

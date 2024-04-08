@@ -1,17 +1,23 @@
-import { FC, FormEvent, useEffect, useState } from 'react';
+import { FC, FormEvent, useContext, useEffect, useState } from 'react';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { authApi } from '../../api/authApi.ts';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
+import { observer } from 'mobx-react';
 
 interface Props {}
 
-export const Auth: FC<Props> = () => {
+const Auth: FC<Props> = () => {
   const [email, setEmail] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const [isEmailSend, setIsEmailSend] = useState(false);
+
+  const {
+    appStore: { toastStore },
+  } = useContext<AppStoreContext>(StoreCtx);
 
   useEffect(() => {
     const token = params.get('token');
@@ -38,6 +44,7 @@ export const Auth: FC<Props> = () => {
       await authApi.authenticate(email);
       setIsEmailSend(true);
     } catch (e) {
+      toastStore.showSnackBar('Не удалось отправить ссылку');
       console.error(e);
     }
   };
@@ -87,3 +94,6 @@ export const Auth: FC<Props> = () => {
     </div>
   );
 };
+
+const connected = observer(Auth);
+export { connected as Auth };
