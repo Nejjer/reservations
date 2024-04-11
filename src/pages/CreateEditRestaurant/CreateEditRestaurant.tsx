@@ -37,7 +37,7 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
 
   const handleSaveRestaurant = async () => {
     await restaurantStore.saveRestaurant(mode, id);
-    navigate('/');
+    navigate('/admin/restaurants');
   };
 
   const handleUpdateField = (
