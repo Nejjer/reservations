@@ -22,7 +22,7 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
   const navigate = useNavigate();
   const [loading, restaurant, fetchRestaurant] = useFetch<IRestaurant>(
     async () => {
-      return restaurantApi.getRestaurant(+id!);
+      return restaurantApi.getRestaurant(+id!, isAdmin);
     },
   );
 
@@ -32,7 +32,7 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
   };
 
   const handleClickEdit = () => {
-    navigate(`/${PATHS.restaurantEdit}/${id}`);
+    navigate(`/admin/${PATHS.restaurantEdit}/${id}`);
   };
 
   useEffect(() => {

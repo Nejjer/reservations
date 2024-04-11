@@ -58,18 +58,24 @@ export enum EKitchenType {
 //     { cost: 100, title: 'Title', weight: '150' },
 //   ],
 //   cost: 4000,
+//   pictures: [],
 // };
 
 class RestaurantApi {
-  public async getRestaurant(id: ID): Promise<IRestaurant> {
+  public async getRestaurant(id: ID, isAdmin?: boolean): Promise<IRestaurant> {
     // console.log(id);
     // return await faker<IRestaurant>(RESTAURANT);
-    return (await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`))
-      .data;
+    const res = isAdmin
+      ? await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`)
+      : await axiosInstance.get<IRestaurant>(`/client/restaurants/${id}`);
+    return res.data;
   }
 
-  public async getRestaurants(): Promise<IRestaurant[]> {
-    return (await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)).data;
+  public async getRestaurants(isAdmin?: boolean): Promise<IRestaurant[]> {
+    const res = isAdmin
+      ? await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)
+      : await axiosInstance.get<IRestaurant[]>(`/client/restaurants`);
+    return res.data;
 
     // return await faker<IRestaurant[]>([
     //   { ...RESTAURANT },

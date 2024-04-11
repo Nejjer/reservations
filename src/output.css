@@ -662,12 +662,20 @@ input[type="number"]::-webkit-inner-spin-button,
   margin-bottom: 0.75rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
 
 .ml-1 {
   margin-left: 0.25rem;
+}
+
+.ml-auto {
+  margin-left: auto;
 }
 
 .mt-0 {
@@ -692,22 +700,6 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.mr-auto {
-  margin-right: auto;
-}
-
-.ml-auto {
-  margin-left: auto;
-}
-
-.mr-3 {
-  margin-right: 0.75rem;
 }
 
 .block {
@@ -907,6 +899,14 @@ input[type="number"]::-webkit-inner-spin-button,
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.grid-cols-\[auto_1fr\] {
+  grid-template-columns: auto 1fr;
+}
+
+.grid-cols-profileInfo {
+  grid-template-columns: 20px 1fr;
+}
+
 .grid-cols-restaurantInfo {
   grid-template-columns: 20px 1fr;
 }
@@ -915,24 +915,8 @@ input[type="number"]::-webkit-inner-spin-button,
   grid-template-columns: 144px 1fr;
 }
 
-.grid-cols-profileInfo {
-  grid-template-columns: 20px 1fr;
-}
-
-.grid-cols-\[auto_1fr\] {
-  grid-template-columns: auto 1fr;
-}
-
 .flex-col {
   flex-direction: column;
-}
-
-.place-items-center {
-  place-items: center;
-}
-
-.place-items-baseline {
-  place-items: baseline;
 }
 
 .items-center {
@@ -1004,10 +988,6 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .gap-y-6 {
   row-gap: 1.5rem;
-}
-
-.self-center {
-  align-self: center;
 }
 
 .overflow-auto {
@@ -1172,11 +1152,6 @@ input[type="number"]::-webkit-inner-spin-button,
   padding-bottom: 1.25rem;
 }
 
-.px-14 {
-  padding-left: 3.5rem;
-  padding-right: 3.5rem;
-}
-
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -1197,18 +1172,23 @@ input[type="number"]::-webkit-inner-spin-button,
   text-align: center;
 }
 
-.align-baseline {
-  vertical-align: baseline;
-}
-
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
 }
 
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-\[12px\] {
+  font-size: 12px;
 }
 
 .text-\[14px\] {
@@ -1228,15 +1208,6 @@ input[type="number"]::-webkit-inner-spin-button,
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
-.text-\[12px\] {
-  font-size: 12px;
 }
 
 .font-bold {
@@ -1317,10 +1288,6 @@ input[type="number"]::-webkit-inner-spin-button,
     -moz-column-gap: 4rem;
          column-gap: 4rem;
   }
-}
-
-.\[\&\>\*\]\:self-start>* {
-  align-self: flex-start;
 }
 
 .\[\&\>\*\]\:self-end>* {

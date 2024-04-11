@@ -33,7 +33,7 @@ export class CreateEditRestaurantStore {
 
   public async getRestaurant(id: ID) {
     this.loading = true;
-    this.updateRestaurant(await restaurantApi.getRestaurant(id));
+    this.updateRestaurant(await restaurantApi.getRestaurant(id, true));
     runInAction(() => (this.loading = false));
   }
 

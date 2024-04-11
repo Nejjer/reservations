@@ -11,8 +11,8 @@ interface Props {
 }
 
 export const RestaurantList: FC<Props> = ({ isAdmin }) => {
-  const [loading, restaurants, fetchRestaurants] = useFetch(
-    restaurantApi.getRestaurants,
+  const [loading, restaurants, fetchRestaurants] = useFetch(async () =>
+    restaurantApi.getRestaurants(isAdmin),
   );
 
   const navigate = useNavigate();
