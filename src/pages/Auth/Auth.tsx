@@ -78,7 +78,7 @@ const Auth: FC<Props> = () => {
             >
               Вход
             </Button>
-            <div className={'flex justify-between'}>
+            {/* <div className={'flex justify-between'}>
               <span>Ещё нет аккаунта?</span>
               <a
                 className={'font-bold'}
@@ -86,7 +86,7 @@ const Auth: FC<Props> = () => {
               >
                 Зарегистрируйтесь!
               </a>
-            </div>
+            </div> */}
           </form>
         )}
       </div>

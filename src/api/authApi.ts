@@ -17,12 +17,12 @@ export class AuthApi {
   }
 
   public async getProfile(): Promise<IProfile> {
-    return await faker<IProfile>({
-      name: 'Зубенко Михаил Петрович',
-      phoneNumber: '89874981224',
-      email: 'i@devdev.ru',
-    });
-    //return (await axiosInstance.get<IProfile>(`/auth/profile`)).data;
+    // return await faker<IProfile>({
+    //   name: 'Зубенко Михаил Петрович',
+    //   phoneNumber: '89874981224',
+    //   email: 'i@devdev.ru',
+    // });
+    return (await axiosInstance.get<IProfile>(`/auth/profile`)).data;
   }
 }
 
