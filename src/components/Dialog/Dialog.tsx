@@ -13,6 +13,7 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   className?: string;
   buttonsClassName?: string;
+  hideButtons?: boolean;
 }
 
 export const Dialog: FC<Props> = ({
@@ -25,6 +26,7 @@ export const Dialog: FC<Props> = ({
   onOpenChange,
   className,
   buttonsClassName,
+  hideButtons,
 }) => {
   return (
     <DialogDefault.Root open={open} onOpenChange={onOpenChange}>
@@ -43,20 +45,22 @@ export const Dialog: FC<Props> = ({
             <h4 className={'mb-6 text-2xl font-bold'}>{title}</h4>
           </DialogDefault.Title>
           <DialogDefault.Description>{children}</DialogDefault.Description>
-          <div className={buttonsClassName + ' mt-6 flex justify-between'}>
-            <DialogDefault.Close asChild>
-              <Button
-                onClick={() => onConfirm().then(() => onOpenChange(false))}
-              >
-                Сохранить
-              </Button>
-            </DialogDefault.Close>
-            <DialogDefault.Close asChild>
-              <Button onClick={onCancel} className={'!bg-blue'}>
-                Отмена
-              </Button>
-            </DialogDefault.Close>
-          </div>
+          {!hideButtons && (
+            <div className={buttonsClassName + ' mt-6 flex justify-between'}>
+              <DialogDefault.Close asChild>
+                <Button
+                  onClick={() => onConfirm().then(() => onOpenChange(false))}
+                >
+                  Сохранить
+                </Button>
+              </DialogDefault.Close>
+              <DialogDefault.Close asChild>
+                <Button onClick={onCancel} className={'!bg-blue'}>
+                  Отмена
+                </Button>
+              </DialogDefault.Close>
+            </div>
+          )}
           <DialogDefault.Close
             className={'absolute right-[10px] top-[10px] cursor-pointer'}
           >

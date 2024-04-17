@@ -1,7 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Dialog } from '../Dialog';
 import { Button } from '../Button';
 import { Input } from '../Input';
+import { PickAvailableTime } from '../PickAvailableTime';
+import ClockIcon from '../../icons/clock.svg?react';
 
 interface Props {
   open: boolean;
@@ -9,6 +11,8 @@ interface Props {
 }
 
 export const BookModal: FC<Props> = ({ onOpenChange, open }) => {
+  const [openPickTime, setOpenPickTime] = useState(false);
+
   return (
     <Dialog
       open={open}
@@ -30,9 +34,18 @@ export const BookModal: FC<Props> = ({ onOpenChange, open }) => {
         <Input placeholder={'E-mail'} />
         <div className={'flex gap-4'}>
           <Input type={'date'} className={'basis-1/3'} />
-          <Input
-            placeholder={'Время*'}
-            className={'book-time-input basis-1/3'}
+          <PickAvailableTime
+            open={openPickTime}
+            onOpenChange={setOpenPickTime}
+            trigger={
+              <button
+                className={
+                  'flex basis-1/3 items-center gap-2 rounded-[5px] border border-black pl-1 text-black/50'
+                }
+              >
+                <ClockIcon className={'h-5'} /> Время*
+              </button>
+            }
           />
           <Input
             placeholder={'Кол-во персон*'}
