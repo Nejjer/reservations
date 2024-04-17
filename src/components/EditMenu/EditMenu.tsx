@@ -10,14 +10,14 @@ interface Props {
 }
 
 export const EditMenu: FC<Props> = ({ onChange, menu }) => {
-  const [cost, setCost] = useState<number>();
+  const [cost, setCost] = useState('');
   const [weight, setWeight] = useState('');
   const [title, setTitle] = useState('');
 
   const isValid = cost && weight && title;
   const handleAddClick = () => {
-    isValid && onChange([...menu, { cost, title, weight }]);
-    setCost(0);
+    isValid && onChange([...menu, { cost: +cost, title, weight }]);
+    setCost('');
     setWeight('');
     setTitle('');
   };
@@ -37,9 +37,10 @@ export const EditMenu: FC<Props> = ({ onChange, menu }) => {
         />
         <Input
           placeholder={'Цена'}
-          type={'number'}
+          mask={'999999'}
           value={cost}
-          onChange={(e) => setCost(+e.target.value)}
+          maskChar={''}
+          onChange={(e) => setCost(e.target.value)}
         />
         <Input
           placeholder={'Весь/Кол-во'}

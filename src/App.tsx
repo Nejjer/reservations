@@ -5,11 +5,14 @@ import { Restaurant } from './pages/Restaurant';
 import { CreateEditRestaurant, EMode } from './pages/CreateEditRestaurant';
 import { PATHS } from './utils/PATHS.ts';
 import { Profile } from './pages/Profile';
+import { BookModal } from './components/BookModal';
 
 function App() {
   return (
     <>
       <Header />
+      <BookModal open={true} onOpenChange={() => console.log('')} />
+
       <div className={'space-x-6'} />
       <div className={'px-6'}>
         <Routes>

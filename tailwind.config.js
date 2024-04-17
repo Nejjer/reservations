@@ -20,6 +20,7 @@ export default {
           to: { opacity: 1 },
         },
       },
+
       colors: {
         black: '#052136',
         green: '#7EEC96',

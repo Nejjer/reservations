@@ -8,3 +8,31 @@
         margin: 0;
     }
 }
+
+@layer base {
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        position: absolute;
+        left: 5.5%;
+        background: url("../src/icons/calendar.svg") center center no-repeat;
+        background-size: 18px;
+    }
+    input[type="date"] {
+        padding-left: 6%;
+        padding-right: 10px;
+    }
+}
+
+@layer component {
+    .person-input {
+        background: url("../src/icons/person.svg") no-repeat left;
+        background-position-x: 8px;
+        background-size: 18px;
+        padding-left: 32px !important;
+    }
+    .book-time-input {
+        background: url("../src/icons/clock.svg") no-repeat left;
+        background-position-x: 8px;
+        background-size: 18px;
+        padding-left: 36px !important;
+    }
+}

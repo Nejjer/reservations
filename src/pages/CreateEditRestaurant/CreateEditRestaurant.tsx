@@ -122,6 +122,7 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
               />
               <Input
                 placeholder={'Телефон'}
+                mask={'+7 (999) 999-99-99'}
                 value={restaurant.contact.phone}
                 onChange={(e) =>
                   handleUpdateField('contact', {
