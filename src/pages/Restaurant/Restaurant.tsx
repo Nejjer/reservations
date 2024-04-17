@@ -66,14 +66,14 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
             }
           >
             <WalletIcon className={'mt-0.5'} />
-            <p>Средний чек - {restaurant.cost} ₽</p>
+            <div>Средний чек - {restaurant.cost} ₽</div>
             <CalendarIcon className={'mt-0.5'} />
-            <p className={'grid grid-cols-2 gap-y-2'}>
+            <div className={'grid grid-cols-2 gap-y-2'}>
               Открытие&nbsp;
-              <p>{restaurant.startWorkTime}</p>
+              <div>{restaurant.startWorkTime}</div>
               Закрытие&nbsp;
-              <p>{restaurant.endWorkTime}</p>
-            </p>
+              <div>{restaurant.endWorkTime}</div>
+            </div>
           </div>
           <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>
             <InfoIcon className={'mt-1'} />

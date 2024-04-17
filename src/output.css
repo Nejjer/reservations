@@ -1279,6 +1279,11 @@ input[type="date"] {
   color: rgb(5 33 54 / 0.5);
 }
 
+.text-red {
+  --tw-text-opacity: 1;
+  color: rgb(243 146 186 / var(--tw-text-opacity));
+}
+
 .shadow-button {
   --tw-shadow: 2px 2px 0px 0px #052136;
   --tw-shadow-colored: 2px 2px 0px 0px var(--tw-shadow-color);

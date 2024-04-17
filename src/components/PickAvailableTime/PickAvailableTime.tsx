@@ -25,7 +25,9 @@ export const PickAvailableTime: FC<Props> = ({
       key={time}
       onClick={() => onTimePick(time)}
     >
-      {DateTime.fromMillis(time).toLocaleString(DateTime.TIME_24_SIMPLE)}
+      {DateTime.fromMillis(time)
+        .toUTC()
+        .toLocaleString(DateTime.TIME_24_SIMPLE)}
     </li>
   );
 
@@ -33,18 +35,20 @@ export const PickAvailableTime: FC<Props> = ({
 
   const morning = timesSet?.filter(
     (time) =>
-      DateTime.fromMillis(time).hour >= 5 &&
-      DateTime.fromMillis(time).hour <= 12,
+      DateTime.fromMillis(time).toUTC().hour >= 5 &&
+      DateTime.fromMillis(time).toUTC().hour <= 12,
   );
   const day = timesSet?.filter(
     (time) =>
-      DateTime.fromMillis(time).hour >= 13 &&
-      DateTime.fromMillis(time).hour <= 17,
+      DateTime.fromMillis(time).toUTC().hour >= 13 &&
+      DateTime.fromMillis(time).toUTC().hour <= 17,
   );
   const evening = timesSet?.filter(
     (time) =>
-      DateTime.fromMillis(time).hour >= 18 &&
-      DateTime.fromMillis(time).hour <= 4,
+      (DateTime.fromMillis(time).toUTC().hour >= 18 &&
+        DateTime.fromMillis(time).toUTC().hour <= 23) ||
+      (DateTime.fromMillis(time).toUTC().hour >= 0 &&
+        DateTime.fromMillis(time).toUTC().hour <= 4),
   );
 
   return (
@@ -62,7 +66,7 @@ export const PickAvailableTime: FC<Props> = ({
       <div className={'flex flex-col gap-4'}>
         {!!morning?.length && (
           <div>
-            <p className={'mb-1'}>Утро</p>
+            <div className={'mb-1'}>Утро</div>
             <ul className={'flex flex-wrap gap-3'}>
               {morning?.map(renderTime)}
             </ul>
@@ -70,13 +74,13 @@ export const PickAvailableTime: FC<Props> = ({
         )}
         {!!day?.length && (
           <div>
-            <p className={'mb-1'}>День</p>
+            <div className={'mb-1'}>День</div>
             <ul className={'flex flex-wrap gap-3'}>{day?.map(renderTime)}</ul>
           </div>
         )}
         {!!evening?.length && (
           <div>
-            <p className={'mb-1'}>Вечер</p>
+            <div className={'mb-1'}>Вечер</div>
             <ul className={'flex flex-wrap gap-3'}>
               {evening?.map(renderTime)}
             </ul>

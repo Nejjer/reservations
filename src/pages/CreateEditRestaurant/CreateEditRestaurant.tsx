@@ -5,6 +5,7 @@ import { ImageList } from '../../components/ImageList';
 import CalendarIcon from '../../icons/calendar.svg?react';
 import WalletIcon from '../../icons/wallet20.svg?react';
 import InfoIcon from '../../icons/info20.svg?react';
+import ClockIcon from '../../icons/clock.svg?react';
 import { Input } from '../../components/Input';
 import { Select } from '../../components/Select';
 import { EditMenu } from '../../components/EditMenu';
@@ -109,6 +110,19 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
                   handleUpdateField('endWorkTime', e.target.value)
                 }
               />
+            </p>
+            <ClockIcon className={'mt-0.5'} />
+            <p className={'whitespace-nowrap'}>
+              Резервировать стол на{' '}
+              <Input
+                mask={'9999'}
+                maskChar={''}
+                value={restaurant.reservationThreshold}
+                onChange={(e) =>
+                  handleUpdateField('reservationThreshold', e.target.value)
+                }
+              />
+              &nbsp;минут
             </p>
           </div>
           <div className={'grid grid-cols-restaurantInfo gap-x-5 gap-y-4'}>

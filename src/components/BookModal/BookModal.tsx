@@ -53,9 +53,16 @@ export const BookModal: FC<Props> = ({
       clientEmail: email,
       clientName: firstname,
       clientPhone: phone,
-      tableId: 3,
+      tableId: 4,
       personsCount: +personsCount,
     });
+    setTime(0);
+    setSecondName('');
+    setFirstname('');
+    setPersonsCount('');
+    setComment('');
+    setEmail('');
+    setPhone('');
   };
 
   return (
@@ -95,6 +102,13 @@ export const BookModal: FC<Props> = ({
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
+          <Input
+            placeholder={'Кол-во персон*'}
+            mask={'99'}
+            maskChar={''}
+            className={'person-input basis-1/3'}
+            onChange={({ target }) => setPersonsCount(target.value)}
+          />
           <PickAvailableTime
             times={timeSlots?.map((timeSlot) => timeSlot.dateTime)}
             open={openPickTime}
@@ -108,22 +122,15 @@ export const BookModal: FC<Props> = ({
                 <ClockIcon className={'h-5'} />{' '}
                 {!time
                   ? 'Время *'
-                  : DateTime.fromMillis(time).toLocaleString(
-                      DateTime.TIME_24_SIMPLE,
-                    )}
+                  : DateTime.fromMillis(time)
+                      .toUTC()
+                      .toLocaleString(DateTime.TIME_24_SIMPLE)}
               </button>
             }
             onTimePick={(time) => {
               setTime(time);
               setOpenPickTime(false);
             }}
-          />
-          <Input
-            placeholder={'Кол-во персон*'}
-            mask={'99'}
-            maskChar={''}
-            className={'person-input basis-1/3'}
-            onChange={({ target }) => setPersonsCount(target.value)}
           />
         </div>
         <textarea
@@ -135,6 +142,9 @@ export const BookModal: FC<Props> = ({
           }
           onChange={({ target }) => setComment(target.value)}
         />
+      </div>
+      <div className={'text-[12px]'}>
+        <span className={'text-red'}>*</span> Поля, обязательные для заполнения
       </div>
     </Dialog>
   );

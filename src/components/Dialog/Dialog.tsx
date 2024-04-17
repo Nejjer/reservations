@@ -44,7 +44,7 @@ export const Dialog: FC<Props> = ({
           }
         >
           <DialogDefault.Title>
-            <h4 className={'mb-6 text-2xl font-bold'}>{title}</h4>
+            <div className={'mb-6 text-2xl font-bold'}>{title}</div>
           </DialogDefault.Title>
           <DialogDefault.Description>{children}</DialogDefault.Description>
           {!hideButtons && (
