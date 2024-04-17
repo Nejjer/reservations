@@ -4,10 +4,10 @@ import CancelIcon from '../../../icons/cancel.svg?react';
 import CheckIcon from '../../../icons/check.svg?react';
 
 interface Props {
-  number?: number;
+  number: string;
   title: string;
   setTitle: (title: string) => void;
-  setNumber: (number: number) => void;
+  setNumber: (number: string) => void;
   handleAddPlace: () => void;
   setIsAdding: (isAdding: boolean) => void;
 }
@@ -28,8 +28,9 @@ export const InputPlace: FC<Props> = ({
         placeholder={'№'}
         className={'h-6 w-8 shrink border-none px-1'}
         value={number}
-        type={'number'}
-        onChange={(e) => setNumber(+e.target.value)}
+        mask={'999'}
+        maskChar={''}
+        onChange={(e) => setNumber(e.target.value)}
       />
       <Input
         value={title}

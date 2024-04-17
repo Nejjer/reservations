@@ -1,40 +1,50 @@
 import { FC, ReactNode } from 'react';
 import { Dialog } from '../Dialog';
+import { DateTime } from 'luxon';
 
 interface Props {
   open: boolean;
   onOpenChange: (isOpen: boolean) => void;
   trigger: ReactNode;
+  times?: number[];
+  onTimePick: (date: number) => void;
 }
-
-const times = [
-  '12:00',
-  '13:00',
-  '14:00',
-  '15:00',
-  '16:00',
-  '17:00',
-  '18:00',
-  '19:00',
-  '20:00',
-  '21:00',
-  '22:00',
-];
 
 export const PickAvailableTime: FC<Props> = ({
   open,
   onOpenChange,
   trigger,
+  onTimePick,
+  times,
 }) => {
-  const renderTime = (time: string) => (
+  const renderTime = (time: number) => (
     <li
       className={
-        'bg-gray flex w-12 cursor-pointer items-center justify-center rounded-[5px] px-2 py-1'
+        'flex w-12 cursor-pointer items-center justify-center rounded-[5px] bg-gray px-2 py-1'
       }
       key={time}
+      onClick={() => onTimePick(time)}
     >
-      {time}
+      {DateTime.fromMillis(time).toLocaleString(DateTime.TIME_24_SIMPLE)}
     </li>
+  );
+
+  const timesSet = [...new Set(times)];
+
+  const morning = timesSet?.filter(
+    (time) =>
+      DateTime.fromMillis(time).hour >= 5 &&
+      DateTime.fromMillis(time).hour <= 12,
+  );
+  const day = timesSet?.filter(
+    (time) =>
+      DateTime.fromMillis(time).hour >= 13 &&
+      DateTime.fromMillis(time).hour <= 17,
+  );
+  const evening = timesSet?.filter(
+    (time) =>
+      DateTime.fromMillis(time).hour >= 18 &&
+      DateTime.fromMillis(time).hour <= 4,
   );
 
   return (
@@ -50,18 +60,28 @@ export const PickAvailableTime: FC<Props> = ({
       hideButtons
     >
       <div className={'flex flex-col gap-4'}>
-        <div>
-          <p className={'mb-1'}>Утро</p>
-          <ul className={'flex flex-wrap gap-3'}>{times.map(renderTime)}</ul>
-        </div>
-        <div>
-          <p className={'mb-1'}>День</p>
-          <ul className={'flex flex-wrap gap-3'}>{times.map(renderTime)}</ul>
-        </div>
-        <div>
-          <p className={'mb-1'}>Вечер</p>
-          <ul className={'flex flex-wrap gap-3'}>{times.map(renderTime)}</ul>
-        </div>
+        {!!morning?.length && (
+          <div>
+            <p className={'mb-1'}>Утро</p>
+            <ul className={'flex flex-wrap gap-3'}>
+              {morning?.map(renderTime)}
+            </ul>
+          </div>
+        )}
+        {!!day?.length && (
+          <div>
+            <p className={'mb-1'}>День</p>
+            <ul className={'flex flex-wrap gap-3'}>{day?.map(renderTime)}</ul>
+          </div>
+        )}
+        {!!evening?.length && (
+          <div>
+            <p className={'mb-1'}>Вечер</p>
+            <ul className={'flex flex-wrap gap-3'}>
+              {evening?.map(renderTime)}
+            </ul>
+          </div>
+        )}
       </div>
     </Dialog>
   );

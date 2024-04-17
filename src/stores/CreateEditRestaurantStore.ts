@@ -20,7 +20,7 @@ const emptyRestaurant: ICreateRestaurantDto = {
   endWorkTime: '',
   kitchenType: EKitchenType.Asian,
   startWorkTime: '',
-  reservationThreshold: 0,
+  reservationThreshold: 60,
   pictures: [],
 };
 

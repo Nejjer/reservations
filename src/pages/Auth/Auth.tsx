@@ -70,6 +70,8 @@ const Auth: FC<Props> = () => {
               value={email}
               onChange={(e) => handleEmailChange(e.target.value)}
               placeholder={'E-mail'}
+              name={'email'}
+              autoComplete={'email'}
             />
             <Button
               disabled={!isValid}

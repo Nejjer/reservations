@@ -790,10 +790,6 @@ input[type="date"] {
   height: 100vh;
 }
 
-.h-4 {
-  height: 1rem;
-}
-
 .max-h-\[600px\] {
   max-height: 600px;
 }
@@ -1046,6 +1042,10 @@ input[type="date"] {
   overflow: auto;
 }
 
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
 .\!rounded-\[50\%\] {
   border-radius: 50% !important;
 }
@@ -1213,6 +1213,10 @@ input[type="date"] {
   padding-bottom: 1rem;
 }
 
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
 .pl-6 {
   padding-left: 1.5rem;
 }
@@ -1223,14 +1227,6 @@ input[type="date"] {
 
 .pt-5 {
   padding-top: 1.25rem;
-}
-
-.pl-2 {
-  padding-left: 0.5rem;
-}
-
-.pl-1 {
-  padding-left: 0.25rem;
 }
 
 .text-center {
@@ -1279,15 +1275,6 @@ input[type="date"] {
   font-weight: 700;
 }
 
-.text-gray {
-  --tw-text-opacity: 1;
-  color: rgb(217 217 217 / var(--tw-text-opacity));
-}
-
-.text-black\/40 {
-  color: rgb(5 33 54 / 0.4);
-}
-
 .text-black\/50 {
   color: rgb(5 33 54 / 0.5);
 }
@@ -1296,6 +1283,10 @@ input[type="date"] {
   --tw-shadow: 2px 2px 0px 0px #052136;
   --tw-shadow-colored: 2px 2px 0px 0px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 @layer component {

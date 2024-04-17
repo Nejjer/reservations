@@ -45,6 +45,9 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
     value: ICreateRestaurantDto[keyof ICreateRestaurantDto],
   ) => {
     const rest = { ...restaurantStore.restaurant };
+    if (typeof value === 'number') {
+      value = +value;
+    }
     rest[field] = value as never;
     restaurantStore.updateRestaurant(rest);
   };
@@ -77,15 +80,16 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
             }
           >
             <WalletIcon className={'mt-0.5'} />
-            <p>
+            <p className={'whitespace-nowrap'}>
               Средний чек -{' '}
               <Input
-                type={'number'}
+                mask={'999999'}
+                maskChar={''}
                 className={'w-16'}
                 value={restaurant.cost}
-                onChange={(e) => handleUpdateField('cost', +e.target.value)}
+                onChange={(e) => handleUpdateField('cost', e.target.value)}
               />
-              &nbsp; ₽
+              &nbsp;₽
             </p>
             <CalendarIcon className={'mt-0.5'} />
             <p className={'grid grid-cols-2 gap-y-2'}>

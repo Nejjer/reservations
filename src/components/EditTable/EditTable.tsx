@@ -14,29 +14,32 @@ interface Props {
 }
 
 export const EditTable: FC<Props> = ({ table, onEditTable }) => {
-  const [number, setNumber] = useState<number>();
+  const [number, setNumber] = useState('');
   const [title, setTitle] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const [indexIsEdit, setIndexIsEdit] = useState(-1);
   const handleAddPlace = () => {
     number &&
       title &&
-      onEditTable({ ...table, places: [...table.places, { title, number }] });
+      onEditTable({
+        ...table,
+        places: [...table.places, { title, number: +number }],
+      });
     setTitle('');
-    setNumber(undefined);
+    setNumber('');
     setIndexIsEdit(-1);
   };
 
   const handleEditPlace = () => {
     if (number && title) {
       const newPlaces = [...table.places].map((place, index) =>
-        index === indexIsEdit ? { title, number } : place,
+        index === indexIsEdit ? { title, number: +number } : place,
       );
 
       number && title && onEditTable({ ...table, places: newPlaces });
       setIndexIsEdit(-1);
       setTitle('');
-      setNumber(undefined);
+      setNumber('');
     }
   };
 
@@ -78,6 +81,7 @@ export const EditTable: FC<Props> = ({ table, onEditTable }) => {
                 <InputPlace
                   key={place.title + index}
                   title={title}
+                  number={number}
                   setTitle={setTitle}
                   setNumber={setNumber}
                   handleAddPlace={handleEditPlace}

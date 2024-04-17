@@ -67,14 +67,14 @@ class RestaurantApi {
     // return await faker<IRestaurant>(RESTAURANT);
     const res = isAdmin
       ? await axiosInstance.get<IRestaurant>(`/admin/restaurants/${id}`)
-      : await axiosInstance.get<IRestaurant>(`/client/restaurants/${id}`);
+      : await axiosInstance.get<IRestaurant>(`/restaurants/${id}`);
     return res.data;
   }
 
   public async getRestaurants(isAdmin?: boolean): Promise<IRestaurant[]> {
     const res = isAdmin
       ? await axiosInstance.get<IRestaurant[]>(`/admin/restaurants`)
-      : await axiosInstance.get<IRestaurant[]>(`/client/restaurants`);
+      : await axiosInstance.get<IRestaurant[]>(`/restaurants`);
     return res.data;
 
     // return await faker<IRestaurant[]>([

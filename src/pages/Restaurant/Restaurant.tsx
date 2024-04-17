@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import CalendarIcon from '../../icons/calendar.svg?react';
 import WalletIcon from '../../icons/wallet20.svg?react';
 import InfoIcon from '../../icons/info20.svg?react';
@@ -12,6 +12,7 @@ import { getKitchenName } from '../../utils/getKitchenName.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATHS } from '../../utils/PATHS.ts';
 import { Tables } from '../../components/Tables';
+import { BookModal } from '../../components/BookModal';
 
 interface Props {
   isAdmin?: boolean;
@@ -20,6 +21,7 @@ interface Props {
 export const Restaurant: FC<Props> = ({ isAdmin }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [openBook, setOpenBook] = useState(false);
   const [loading, restaurant, fetchRestaurant] = useFetch<IRestaurant>(
     async () => {
       return restaurantApi.getRestaurant(+id!, isAdmin);
@@ -84,7 +86,7 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
         </div>
         <article className={'mt-8'}>{restaurant.description}</article>
         <div className={'flex gap-6'}>
-          {isAdmin && (
+          {isAdmin ? (
             <>
               <Button className={'mt-8 w-44'} onClick={handleClickEdit}>
                 Редактировать
@@ -96,6 +98,13 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
                 Удалить
               </Button>
             </>
+          ) : (
+            <BookModal
+              open={openBook}
+              onOpenChange={setOpenBook}
+              restaurantId={+id!}
+              trigger={<Button className={'mt-8'}>Забронировать</Button>}
+            />
           )}
         </div>
       </div>

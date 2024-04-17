@@ -14,6 +14,7 @@ interface Props {
   className?: string;
   buttonsClassName?: string;
   hideButtons?: boolean;
+  disabled?: boolean;
 }
 
 export const Dialog: FC<Props> = ({
@@ -27,6 +28,7 @@ export const Dialog: FC<Props> = ({
   className,
   buttonsClassName,
   hideButtons,
+  disabled,
 }) => {
   return (
     <DialogDefault.Root open={open} onOpenChange={onOpenChange}>
@@ -50,6 +52,7 @@ export const Dialog: FC<Props> = ({
               <DialogDefault.Close asChild>
                 <Button
                   onClick={() => onConfirm().then(() => onOpenChange(false))}
+                  disabled={disabled}
                 >
                   Сохранить
                 </Button>

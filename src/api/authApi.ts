@@ -1,5 +1,4 @@
 import { axiosInstance } from './axiosInstance.ts';
-import { faker } from './faker.ts';
 
 export interface IProfile {
   email: string;
