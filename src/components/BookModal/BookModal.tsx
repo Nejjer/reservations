@@ -60,7 +60,7 @@ export const BookModal: FC<Props> = ({
     setTimeSlots(
       timeSlots?.filter((slot) => slot.availablePlaces >= +personsCount),
     );
-  }, [timeSlots, personsCount]);
+  }, [date, personsCount]);
 
   useEffect(() => {
     setIsValid(!!secondname && !!phone && !!+personsCount && !!time);
