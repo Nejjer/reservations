@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, ReactNode, useContext, useEffect, useState } from 'react';
 import { Dialog } from '../Dialog';
 import { Input } from '../Input';
 import { PickAvailableTime } from '../PickAvailableTime';
@@ -6,6 +6,7 @@ import ClockIcon from '../../icons/clock.svg?react';
 import { ITimeSlot, reservationApi } from '../../api/reservationApi.ts';
 import { ID } from '../../api/axiosInstance.ts';
 import { DateTime } from 'luxon';
+import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
 
 interface Props {
   open: boolean;
@@ -33,10 +34,22 @@ export const BookModal: FC<Props> = ({
   const [tableId, setTableId] = useState(0);
   const [timeSlots, setTimeSlots] = useState<ITimeSlot[]>([]);
 
+  const {
+    appStore: { toastStore },
+  } = useContext<AppStoreContext>(StoreCtx);
+
   const fetchTimeSlots = async () => {
-    setTimeSlots(
-      await reservationApi.getTimeSlots(restaurantId, new Date(date).getTime()),
-    );
+    try {
+      setTimeSlots(
+        await reservationApi.getTimeSlots(
+          restaurantId,
+          new Date(date).getTime(),
+        ),
+      );
+    } catch (e) {
+      console.error(e);
+      toastStore.showSnackBar('Не удалось получить свободные столики');
+    }
   };
 
   useEffect(() => {
@@ -54,24 +67,30 @@ export const BookModal: FC<Props> = ({
   }, [secondname, phone, personsCount, time]);
 
   const handleReserve = async () => {
-    await reservationApi.reserve({
-      date: time,
-      comment,
-      restaurantId,
-      clientEmail: email,
-      clientName: firstname,
-      clientPhone: phone,
-      tableId,
-      personsCount: +personsCount,
-    });
-    setTime(0);
-    setSecondName('');
-    setFirstname('');
-    setPersonsCount('');
-    setComment('');
-    setEmail('');
-    setPhone('');
-    setDate('');
+    try {
+      await reservationApi.reserve({
+        date: time,
+        comment,
+        restaurantId,
+        clientEmail: email,
+        clientName: firstname,
+        clientPhone: phone,
+        tableId,
+        personsCount: +personsCount,
+      });
+    } catch (e) {
+      console.error(e);
+      toastStore.showSnackBar('Не удалось зарезервировать столик');
+    } finally {
+      setTime(0);
+      setSecondName('');
+      setFirstname('');
+      setPersonsCount('');
+      setComment('');
+      setEmail('');
+      setPhone('');
+      setDate('');
+    }
   };
 
   return (
