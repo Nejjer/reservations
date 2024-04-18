@@ -3,7 +3,6 @@ import { Dialog } from '../Dialog';
 import { Input } from '../Input';
 import { PickAvailableTime } from '../PickAvailableTime';
 import ClockIcon from '../../icons/clock.svg?react';
-import { useFetch } from '../../hooks/useFetch.ts';
 import { ITimeSlot, reservationApi } from '../../api/reservationApi.ts';
 import { ID } from '../../api/axiosInstance.ts';
 import { DateTime } from 'luxon';
@@ -31,15 +30,24 @@ export const BookModal: FC<Props> = ({
   const [personsCount, setPersonsCount] = useState('');
   const [comment, setComment] = useState('');
   const [isValid, setIsValid] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, timeSlots, fetchTimeSlots] = useFetch<ITimeSlot[]>(
-    async () =>
+  const [tableId, setTableId] = useState(0);
+  const [timeSlots, setTimeSlots] = useState<ITimeSlot[]>([]);
+
+  const fetchTimeSlots = async () => {
+    setTimeSlots(
       await reservationApi.getTimeSlots(restaurantId, new Date(date).getTime()),
-  );
+    );
+  };
 
   useEffect(() => {
     date && fetchTimeSlots();
   }, [date]);
+
+  useEffect(() => {
+    setTimeSlots(
+      timeSlots?.filter((slot) => slot.availablePlaces >= +personsCount),
+    );
+  }, [timeSlots, personsCount]);
 
   useEffect(() => {
     setIsValid(!!secondname && !!phone && !!+personsCount && !!time);
@@ -53,7 +61,7 @@ export const BookModal: FC<Props> = ({
       clientEmail: email,
       clientName: firstname,
       clientPhone: phone,
-      tableId: 4,
+      tableId,
       personsCount: +personsCount,
     });
     setTime(0);
@@ -63,6 +71,7 @@ export const BookModal: FC<Props> = ({
     setComment('');
     setEmail('');
     setPhone('');
+    setDate('');
   };
 
   return (
@@ -110,13 +119,13 @@ export const BookModal: FC<Props> = ({
             onChange={({ target }) => setPersonsCount(target.value)}
           />
           <PickAvailableTime
-            times={timeSlots?.map((timeSlot) => timeSlot.dateTime)}
+            timeSlots={timeSlots}
             open={openPickTime}
             onOpenChange={setOpenPickTime}
             trigger={
               <button
                 className={`flex basis-1/3 items-center gap-2 rounded-[5px] border border-black pl-1 ${!time && 'text-black/50'}`}
-                disabled={!timeSlots}
+                disabled={!timeSlots || !personsCount}
                 title={'Сначала выберите дату'}
               >
                 <ClockIcon className={'h-5'} />{' '}
@@ -128,7 +137,8 @@ export const BookModal: FC<Props> = ({
               </button>
             }
             onTimePick={(time) => {
-              setTime(time);
+              setTime(time.dateTime);
+              setTableId(time.tableId);
               setOpenPickTime(false);
             }}
           />
