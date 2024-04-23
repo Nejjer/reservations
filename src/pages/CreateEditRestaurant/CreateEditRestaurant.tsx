@@ -9,7 +9,7 @@ import ClockIcon from '../../icons/clock.svg?react';
 import { Input } from '../../components/Input';
 import { Select } from '../../components/Select';
 import { EditMenu } from '../../components/EditMenu';
-import { ICreateRestaurantDto } from '../../api/restaurantApi.ts';
+import { EKitchenType, ICreateRestaurantDto } from '../../api/restaurantApi.ts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
@@ -71,7 +71,22 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           />
           <Select
             onValueChange={(value) => handleUpdateField('kitchenType', value)}
-            value={restaurant.kitchenType as never as string}
+            value={restaurant.kitchenType.toString()}
+            defaultValue={restaurant.kitchenType.toString()}
+            values={[
+              {
+                value: EKitchenType.Asian.toString(),
+                title: 'Азиатская кухня',
+              },
+              {
+                value: EKitchenType.Russian.toString(),
+                title: 'Русская кухня',
+              },
+              {
+                value: EKitchenType.Indian.toString(),
+                title: 'Индийская кухня',
+              },
+            ]}
           />
         </div>
         <div className={'mt-8 flex gap-16'}>

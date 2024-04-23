@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Button } from '../../components/Button';
 import { Checkbox } from '../../components/Checkbox';
+import { Select } from '../../components/Select';
 
 export const BookList: FC = () => {
   return (
@@ -57,7 +58,19 @@ export const BookList: FC = () => {
             <td>03.03.2024 14:00</td>
             <td>6</td>
             <td>5</td>
-            <td>Подтверждено</td>
+            <td className={'w-[220px] p-0'}>
+              <Select
+                onValueChange={(value) => console.log(value)}
+                values={[
+                  { value: 'Confirmed', title: 'Подтверждено' },
+                  { value: 'Cancel', title: 'Отклонено' },
+                  { value: 'Wait', title: 'Ожидает' },
+                ]}
+                defaultValue={'Wait'}
+                placeholder={'Выберите '}
+                className={'h-10 w-full rounded-[0] border-0'}
+              />
+            </td>
           </tr>
           <tr>
             <td>
@@ -69,7 +82,19 @@ export const BookList: FC = () => {
             <td>03.03.2024 14:00</td>
             <td>6</td>
             <td>5</td>
-            <td>Подтверждено</td>
+            <td className={'w-[220px] p-0'}>
+              <Select
+                onValueChange={(value) => console.log(value)}
+                values={[
+                  { value: 'Confirmed', title: 'Подтверждено' },
+                  { value: 'Cancel', title: 'Отклонено' },
+                  { value: 'Wait', title: 'Ожидает' },
+                ]}
+                defaultValue={'Wait'}
+                placeholder={'Выберите '}
+                className={'h-10 w-full rounded-[0] border-0'}
+              />
+            </td>
           </tr>
         </tbody>
       </table>
