@@ -5,6 +5,7 @@ import { Restaurant } from './pages/Restaurant';
 import { CreateEditRestaurant, EMode } from './pages/CreateEditRestaurant';
 import { PATHS } from './utils/PATHS.ts';
 import { Profile } from './pages/Profile';
+import { BookList } from './pages/BookList';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                   path={PATHS.restaurantCreate}
                   element={<CreateEditRestaurant mode={EMode.Create} />}
                 />
+                <Route path={PATHS.bookList} element={<BookList />} />
               </Routes>
             }
           />

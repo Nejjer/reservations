@@ -35,4 +35,48 @@
         background-size: 18px;
         padding-left: 36px !important;
     }
+
+    .table {
+        border-collapse: collapse !important;
+        width: 100%;
+        th > div {
+            background: #74B3E180;
+            border-radius: 5px;
+            border: 2px solid #fff;
+            height: 40px;
+            padding: 8px;
+            font-weight: normal;
+            margin-bottom: 8px;
+        }
+        tbody {
+            box-shadow: 0 0 0 2px #052136;
+            border-radius: 5px;
+        }
+
+        tbody tr {
+            height: 40px;
+        }
+
+        td {
+            /*box-shadow: 0 0 0 1px #000;*/
+            border: 2px solid #052136 !important;
+            padding: 8px;
+        }
+
+        tbody tr:first-child td {
+            border-top: none !important;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none !important;
+        }
+
+        tbody tr td:first-child {
+            border-left: none !important;
+        }
+
+        tbody tr td:last-child {
+            border-right: none !important;
+        }
+    }
 }
