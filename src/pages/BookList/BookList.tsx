@@ -1,9 +1,21 @@
-import { FC } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { Button } from '../../components/Button';
 import { Checkbox } from '../../components/Checkbox';
-import { Select } from '../../components/Select';
+import { observer } from 'mobx-react';
+import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
+import { DateTime } from 'luxon';
+import { mapEbookStatus } from '../../api/bookApi.ts';
+import { ShowBookModal } from '../../components/ShowBookModal';
 
-export const BookList: FC = () => {
+const BookList: FC = () => {
+  const {
+    appStore: { adminBookStore },
+  } = useContext<AppStoreContext>(StoreCtx);
+
+  useEffect(() => {
+    adminBookStore.getBooks();
+  }, []);
+
   return (
     <div className={'container mt-6'}>
       <div className={'flex justify-between'}>
@@ -22,7 +34,13 @@ export const BookList: FC = () => {
         <thead>
           <tr>
             <th>
-              <div>Все</div>
+              <div className={'flex justify-between'}>
+                Все
+                <Checkbox
+                  value={!adminBookStore.books.some((book) => !book.selected)}
+                  onChange={(state) => adminBookStore.selectAllBooks(state)}
+                />
+              </div>
             </th>
             <th>
               <div>ID брони</div>
@@ -45,59 +63,44 @@ export const BookList: FC = () => {
             <th>
               <div>Статус брони</div>
             </th>
+            <th>
+              <div>Изменить</div>
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <Checkbox />
-            </td>
-            <td>123456</td>
-            <td>неизвестный</td>
-            <td>Рейчел Грин</td>
-            <td>03.03.2024 14:00</td>
-            <td>6</td>
-            <td>5</td>
-            <td className={'w-[220px] p-0'}>
-              <Select
-                onValueChange={(value) => console.log(value)}
-                values={[
-                  { value: 'Confirmed', title: 'Подтверждено' },
-                  { value: 'Cancel', title: 'Отклонено' },
-                  { value: 'Wait', title: 'Ожидает' },
-                ]}
-                defaultValue={'Wait'}
-                placeholder={'Выберите '}
-                className={'h-10 w-full rounded-[0] border-0'}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <Checkbox />
-            </td>
-            <td>123456</td>
-            <td>неизвестный</td>
-            <td>Рейчел Грин</td>
-            <td>03.03.2024 14:00</td>
-            <td>6</td>
-            <td>5</td>
-            <td className={'w-[220px] p-0'}>
-              <Select
-                onValueChange={(value) => console.log(value)}
-                values={[
-                  { value: 'Confirmed', title: 'Подтверждено' },
-                  { value: 'Cancel', title: 'Отклонено' },
-                  { value: 'Wait', title: 'Ожидает' },
-                ]}
-                defaultValue={'Wait'}
-                placeholder={'Выберите '}
-                className={'h-10 w-full rounded-[0] border-0'}
-              />
-            </td>
-          </tr>
+          {adminBookStore.books?.map((book) => (
+            <tr key={book.id} onClick={() => adminBookStore.showBook(book)}>
+              <td>
+                <div className={'flex justify-end'}>
+                  <Checkbox
+                    value={book.selected}
+                    onChange={(state) =>
+                      adminBookStore.selectBook(book.id, state)
+                    }
+                  />
+                </div>
+              </td>
+              <td>{book.id}</td>
+              <td>{book.restaurantName}</td>
+              <td>{book.name}</td>
+              <td>{DateTime.fromMillis(book.date).toUTC().toLocaleString()}</td>
+              <td>{book.countOfPerson}</td>
+              <td>{book.numberTable}</td>
+              <td>{mapEbookStatus(book.status)}</td>
+              <td>
+                <div className={'flex justify-center'}>
+                  <Button>Изменить</Button>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <ShowBookModal />
     </div>
   );
 };
+
+const connected = observer(BookList);
+export { connected as BookList };

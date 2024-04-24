@@ -15,6 +15,8 @@ interface Props {
   buttonsClassName?: string;
   hideButtons?: boolean;
   disabled?: boolean;
+  confirmBtnText?: string;
+  declineBtnText?: string;
 }
 
 export const Dialog: FC<Props> = ({
@@ -29,6 +31,8 @@ export const Dialog: FC<Props> = ({
   buttonsClassName,
   hideButtons,
   disabled,
+  declineBtnText = 'Отмена',
+  confirmBtnText = 'Сохранить',
 }) => {
   return (
     <DialogDefault.Root open={open} onOpenChange={onOpenChange}>
@@ -54,12 +58,12 @@ export const Dialog: FC<Props> = ({
                   onClick={() => onConfirm().then(() => onOpenChange(false))}
                   disabled={disabled}
                 >
-                  Сохранить
+                  {confirmBtnText}
                 </Button>
               </DialogDefault.Close>
               <DialogDefault.Close asChild>
                 <Button onClick={onCancel} className={'!bg-blue'}>
-                  Отмена
+                  {declineBtnText}
                 </Button>
               </DialogDefault.Close>
             </div>

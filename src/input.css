@@ -55,6 +55,11 @@
 
         tbody tr {
             height: 40px;
+            cursor: pointer;
+        }
+
+        tbody tr:hover {
+            background: rgba(0, 0, 0, 0.1);
         }
 
         td {

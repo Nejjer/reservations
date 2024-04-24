@@ -718,6 +718,10 @@ input[type="date"] {
   margin-top: 2rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -748,6 +752,10 @@ input[type="date"] {
 
 .h-12 {
   height: 3rem;
+}
+
+.h-16 {
+  height: 4rem;
 }
 
 .h-36 {
@@ -788,10 +796,6 @@ input[type="date"] {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-10 {
-  height: 2.5rem;
 }
 
 .max-h-\[600px\] {
@@ -855,18 +859,6 @@ input[type="date"] {
   width: max-content;
 }
 
-.w-\[160px\] {
-  width: 160px;
-}
-
-.w-\[200px\] {
-  width: 200px;
-}
-
-.w-\[220px\] {
-  width: 220px;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -877,10 +869,6 @@ input[type="date"] {
 
 .min-w-\[200px\] {
   min-width: 200px;
-}
-
-.min-w-\[700px\] {
-  min-width: 700px;
 }
 
 .max-w-full {
@@ -995,6 +983,10 @@ input[type="date"] {
   justify-content: center;
 }
 
+.\!justify-center {
+  justify-content: center !important;
+}
+
 .justify-between {
   justify-content: space-between;
 }
@@ -1029,6 +1021,10 @@ input[type="date"] {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.gap-9 {
+  gap: 2.25rem;
 }
 
 .gap-\[14px\] {
@@ -1102,16 +1098,8 @@ input[type="date"] {
   border-radius: 0.375rem;
 }
 
-.rounded-\[0\] {
-  border-radius: 0;
-}
-
 .border {
   border-width: 1px;
-}
-
-.border-0 {
-  border-width: 0px;
 }
 
 .border-b {
@@ -1188,10 +1176,6 @@ input[type="date"] {
 
 .p-2 {
   padding: 0.5rem;
-}
-
-.p-0 {
-  padding: 0px;
 }
 
 .px-1 {
@@ -1315,6 +1299,10 @@ input[type="date"] {
   font-weight: 700;
 }
 
+.font-normal {
+  font-weight: 400;
+}
+
 .text-black\/50 {
   color: rgb(5 33 54 / 0.5);
 }
@@ -1367,6 +1355,10 @@ input[type="date"] {
     }
     tbody tr {
       height: 40px;
+      cursor: pointer;
+    }
+    tbody tr:hover {
+      background: rgba(0, 0, 0, 0.1);
     }
     td {
       /*box-shadow: 0 0 0 1px #000;*/
@@ -1436,6 +1428,10 @@ input[type="date"] {
     max-width: 560px;
   }
 
+  .md\:max-w-\[480px\] {
+    max-width: 480px;
+  }
+
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1466,10 +1462,19 @@ input[type="date"] {
   flex-basis: 33.333333%;
 }
 
+.\[\&\>\*\]\:basis-\[200px\]>* {
+  flex-basis: 200px;
+}
+
 .\[\&\>\*\]\:self-end>* {
   align-self: flex-end;
 }
 
 .\[\&\>\*\]\:self-center>* {
   align-self: center;
+}
+
+.\[\&\>\*\]\:last\:bg-red:last-child>* {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 146 186 / var(--tw-bg-opacity));
 }
