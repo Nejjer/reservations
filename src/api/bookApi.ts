@@ -97,6 +97,10 @@ export class BookApi {
   public async deleteBook(id: number): Promise<void> {
     await axiosInstance.delete(`/admin/books/${id}`);
   }
+
+  public async changeBook(bookId: ID, book: IBook): Promise<void> {
+    await axiosInstance.put(`/admin/books/${bookId}`, book);
+  }
 }
 
 export const bookApi = new BookApi();

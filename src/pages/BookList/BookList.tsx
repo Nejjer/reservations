@@ -7,6 +7,7 @@ import { DateTime } from 'luxon';
 import { mapEbookStatus } from '../../api/bookApi.ts';
 import { ShowBookModal } from '../../components/ShowBookModal';
 import { AdminBookModal } from '../../components/AdminBookModal';
+import { ChangeBookModal } from '../../components/ChangeBookModal';
 
 const BookList: FC = () => {
   const {
@@ -115,7 +116,11 @@ const BookList: FC = () => {
                     className={'flex justify-center'}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <Button>Изменить</Button>
+                    <Button
+                      onClick={() => adminBookStore.changeBookModal(book)}
+                    >
+                      Изменить
+                    </Button>
                   </div>
                 </td>
               </tr>
@@ -129,6 +134,7 @@ const BookList: FC = () => {
       )}
       <ShowBookModal />
       <AdminBookModal />
+      <ChangeBookModal />
     </div>
   );
 };

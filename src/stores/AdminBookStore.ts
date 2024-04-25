@@ -18,6 +18,7 @@ export class AdminBookStore {
   private toastStore: ToastStore;
   public restaurants: IRestaurant[] = [];
   public tables: ITable[] = [];
+  public isOpenChangeBookModal: boolean = false;
 
   constructor(toastStore: ToastStore) {
     this.toastStore = toastStore;
@@ -30,6 +31,19 @@ export class AdminBookStore {
 
   public closeNewBookModal(): void {
     this.isOpenNewBookModal = false;
+  }
+
+  public openChangeBookModal(): void {
+    this.isOpenChangeBookModal = true;
+  }
+
+  public closeChangeBookModal(): void {
+    this.isOpenChangeBookModal = false;
+  }
+
+  public changeBookModal(book: IBook): void {
+    this.openChangeBookModal();
+    this.showingBook = book;
   }
 
   public async deleteSelectedBook(): Promise<void> {
@@ -45,10 +59,12 @@ export class AdminBookStore {
 
   public async getBooks() {
     this.loading = true;
-    const books: IBookStore[] = (await bookApi.getBooks()).map((book) => ({
-      ...book,
-      selected: false,
-    }));
+    const books: IBookStore[] = (await bookApi.getBooks())
+      .map((book) => ({
+        ...book,
+        selected: false,
+      }))
+      .sort((a, b) => a.id - b.id);
 
     runInAction(() => {
       this.books = books;
