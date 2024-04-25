@@ -33,6 +33,17 @@ export interface IBook {
   comment: string;
 }
 
+export interface ICreateBookAdmin {
+  date: number;
+  comment: string;
+  tableId: number;
+  clientEmail: string;
+  clientPhone: string;
+  clientName: string;
+  personsCount: number;
+  restaurantId: number;
+}
+
 const ExampleBook: IBook = {
   reservedPlacesCount: 2,
   clientName: 'Ибрагим Игнат',
@@ -67,6 +78,22 @@ export class BookApi {
     //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
     //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
     // ]);
+  }
+
+  public async submitBook(ReservationId: ID): Promise<void> {
+    await axiosInstance.post(`/admin/books/submit`, { ReservationId });
+  }
+
+  public async cancelBook(ReservationId: ID): Promise<void> {
+    await axiosInstance.post(`/admin/books/cancel`, { ReservationId });
+  }
+
+  public async createBook(book: ICreateBookAdmin): Promise<void> {
+    await axiosInstance.post(`/admin/books`, book);
+  }
+
+  public async deleteBook(id: number): Promise<void> {
+    await axiosInstance.delete(`/admin/books/${id}`);
   }
 }
 

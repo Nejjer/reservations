@@ -17,6 +17,7 @@ interface Props {
   disabled?: boolean;
   confirmBtnText?: string;
   declineBtnText?: string;
+  onCloseClick?: () => void;
 }
 
 export const Dialog: FC<Props> = ({
@@ -25,6 +26,7 @@ export const Dialog: FC<Props> = ({
   title,
   onConfirm,
   onCancel,
+  onCloseClick,
   open,
   onOpenChange,
   className,
@@ -71,7 +73,7 @@ export const Dialog: FC<Props> = ({
           <DialogDefault.Close
             className={'absolute right-[10px] top-[10px] cursor-pointer'}
           >
-            <CloseIcon />
+            <CloseIcon onClick={onCloseClick} />
           </DialogDefault.Close>
         </DialogDefault.Content>
       </DialogDefault.Portal>

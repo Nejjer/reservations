@@ -8,8 +8,10 @@ export interface AppStore {
   adminBookStore: AdminBookStore;
 }
 
+const toastStore = new ToastStore();
+
 export const createAppStore = (): AppStore => ({
   restaurantStore: new CreateEditRestaurantStore(),
-  toastStore: new ToastStore(),
-  adminBookStore: new AdminBookStore(),
+  toastStore: toastStore,
+  adminBookStore: new AdminBookStore(toastStore),
 });

@@ -6,6 +6,7 @@ import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
 import { DateTime } from 'luxon';
 import { mapEbookStatus } from '../../api/bookApi.ts';
 import { ShowBookModal } from '../../components/ShowBookModal';
+import { AdminBookModal } from '../../components/AdminBookModal';
 
 const BookList: FC = () => {
   const {
@@ -21,10 +22,16 @@ const BookList: FC = () => {
       <div className={'flex justify-between'}>
         <h1 className={'pb-4 text-3xl font-bold'}>Актуальные брони</h1>
         <div className={'flex grow justify-end gap-8'}>
-          <Button className={'h-8 basis-[240px] bg-green'}>
+          <Button
+            className={'h-8 basis-[240px] bg-green'}
+            onClick={() => adminBookStore.openNewBookModal()}
+          >
             Создать бронь
           </Button>
-          <Button className={'h-8 basis-[240px] bg-red'}>
+          <Button
+            className={'h-8 basis-[240px] bg-red'}
+            onClick={() => adminBookStore.deleteSelectedBook()}
+          >
             Удалить выделенные
           </Button>
         </div>
@@ -73,7 +80,10 @@ const BookList: FC = () => {
             {adminBookStore.books?.map((book) => (
               <tr key={book.id} onClick={() => adminBookStore.showBook(book)}>
                 <td>
-                  <div className={'flex justify-end'}>
+                  <div
+                    className={'flex justify-end'}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Checkbox
                       value={book.selected}
                       onChange={(state) =>
@@ -92,7 +102,10 @@ const BookList: FC = () => {
                 <td>{book.numberTable}</td>
                 <td>{mapEbookStatus(book.status)}</td>
                 <td>
-                  <div className={'flex justify-center'}>
+                  <div
+                    className={'flex justify-center'}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Button>Изменить</Button>
                   </div>
                 </td>
@@ -106,6 +119,7 @@ const BookList: FC = () => {
         </div>
       )}
       <ShowBookModal />
+      <AdminBookModal />
     </div>
   );
 };

@@ -31,11 +31,12 @@ const ShowBookModal: FC = () => {
         </span>
       }
       onOpenChange={(open) => {
-        !open && adminBookStore.hideBook();
+        console.log(open);
       }}
-      onCancel={() => console.log()}
+      onCloseClick={() => adminBookStore.hideBook()}
+      onCancel={() => adminBookStore.cancelShowingBook()}
       trigger={null}
-      onConfirm={async () => console.log()}
+      onConfirm={async () => await adminBookStore.submitShowingBook()}
       className={'w-[90vw] md:max-w-[480px]'}
       buttonsClassName={
         'flex !justify-center gap-[14px] [&>*]:basis-[200px] [&>*]:last:bg-red'
