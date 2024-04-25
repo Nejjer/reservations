@@ -66,7 +66,7 @@ const BookList: FC = () => {
                 <div>Кол-во персон</div>
               </th>
               <th>
-                <div>№ стола</div>
+                <div>Столик</div>
               </th>
               <th>
                 <div>Статус брони</div>
@@ -96,10 +96,19 @@ const BookList: FC = () => {
                 <td>{book.restaurantName}</td>
                 <td>{book.clientName}</td>
                 <td>
-                  {DateTime.fromMillis(book.date).toUTC().toLocaleString()}
+                  <div className={'flex gap-4'}>
+                    <div>
+                      {DateTime.fromMillis(book.date).toUTC().toLocaleString()}
+                    </div>
+                    <div>
+                      {DateTime.fromMillis(book.date)
+                        .toUTC()
+                        .toLocaleString(DateTime.TIME_24_SIMPLE)}
+                    </div>
+                  </div>
                 </td>
                 <td>{book.reservedPlacesCount}</td>
-                <td>{book.numberTable}</td>
+                <td>{book.tableName}</td>
                 <td>{mapEbookStatus(book.status)}</td>
                 <td>
                   <div

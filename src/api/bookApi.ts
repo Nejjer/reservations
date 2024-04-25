@@ -31,6 +31,7 @@ export interface IBook {
   numberTable: number;
   status: EBookStatus;
   comment: string;
+  tableName: string;
 }
 
 export interface ICreateBookAdmin {
@@ -56,6 +57,7 @@ const ExampleBook: IBook = {
   clientEmail: 'example.cim@ex.com',
   comment:
     'Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба ',
+  tableName: 'sad',
 };
 
 export class BookApi {

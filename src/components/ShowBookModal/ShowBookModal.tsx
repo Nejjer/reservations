@@ -73,7 +73,7 @@ const ShowBookModal: FC = () => {
               <PersonIcon />
               <div>{adminBookStore.showingBook.reservedPlacesCount}</div>
               <TableRestaurantOutlinedIcon />
-              <div>{adminBookStore.showingBook.numberTable}</div>
+              <div>{adminBookStore.showingBook.tableName}</div>
             </div>
           </div>
           <div className={'mt-6 flex flex-col gap-1'}>
