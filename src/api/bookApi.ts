@@ -1,19 +1,21 @@
-import { ID } from './axiosInstance.ts';
+import { axiosInstance, ID } from './axiosInstance.ts';
 import { faker } from './faker.ts';
 
 export enum EBookStatus {
-  Waiting = 'Waiting',
-  Confirmed = 'Confirmed',
-  Declined = 'Declined',
+  Requested,
+  AcceptedByManager,
+  DeclinedByClient,
+  DeclinedByManager,
 }
 
 export const mapEbookStatus = (status: EBookStatus) => {
   switch (status) {
-    case EBookStatus.Waiting:
+    case EBookStatus.Requested:
       return 'Ожидание';
-    case EBookStatus.Confirmed:
+    case EBookStatus.AcceptedByManager:
       return 'Подтверждено';
-    case EBookStatus.Declined:
+    case EBookStatus.DeclinedByClient:
+    case EBookStatus.DeclinedByManager:
       return 'Отклонено';
   }
 };
@@ -21,26 +23,26 @@ export const mapEbookStatus = (status: EBookStatus) => {
 export interface IBook {
   id: ID;
   restaurantName: string;
-  name: string;
-  phone: string;
-  email: string;
+  clientName: string;
+  clientPhone: string;
+  clientEmail: string;
   date: number;
-  countOfPerson: number;
+  reservedPlacesCount: number;
   numberTable: number;
   status: EBookStatus;
   comment: string;
 }
 
 const ExampleBook: IBook = {
-  countOfPerson: 2,
-  name: 'Ибрагим Игнат',
+  reservedPlacesCount: 2,
+  clientName: 'Ибрагим Игнат',
   date: new Date().getTime(),
   numberTable: 7,
-  status: EBookStatus.Waiting,
+  status: EBookStatus.Requested,
   restaurantName: 'Суши у Илюши',
   id: Math.floor(Math.random() * 1000),
-  phone: '+7 987 233 21 12',
-  email: 'example.cim@ex.com',
+  clientPhone: '+7 987 233 21 12',
+  clientEmail: 'example.cim@ex.com',
   comment:
     'Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба ',
 };
@@ -53,18 +55,18 @@ export class BookApi {
   }
 
   public async getBooks(): Promise<IBook[]> {
-    //return (await axiosInstance.get<IBook[]>(`/admin/books/`)).data;
-    return faker<IBook[]>([
-      ExampleBook,
-      { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
-      { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
-      { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
-      { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
-      { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
-      { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
-      { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
-      { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
-    ]);
+    return (await axiosInstance.get<IBook[]>(`/admin/books/`)).data;
+    // return faker<IBook[]>([
+    //   ExampleBook,
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    // ]);
   }
 }
 

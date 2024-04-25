@@ -21,8 +21,8 @@ const ShowBookModal: FC = () => {
       open={adminBookStore.isOpenShowBookModal}
       title={
         <span className={'flex gap-4'}>
-          {adminBookStore.showingBook?.name}{' '}
-          {adminBookStore.showingBook?.status === EBookStatus.Waiting && (
+          {adminBookStore.showingBook?.clientName}{' '}
+          {adminBookStore.showingBook?.status === EBookStatus.Requested && (
             <div className={'flex items-center text-[12px] font-normal'}>
               <InfoIcon className={'mr-2'} />
               Ожидает подтверждения
@@ -43,15 +43,15 @@ const ShowBookModal: FC = () => {
       declineBtnText={'Отклонить'}
       confirmBtnText={'Подтвердить'}
       hideButtons={
-        adminBookStore.showingBook?.status === EBookStatus.Declined ||
-        adminBookStore.showingBook?.status === EBookStatus.Confirmed
+        adminBookStore.showingBook?.status === EBookStatus.DeclinedByClient ||
+        adminBookStore.showingBook?.status === EBookStatus.AcceptedByManager
       }
     >
       {adminBookStore.showingBook && (
         <div>
           <div className={'flex flex-col gap-2 '}>
-            <div>{adminBookStore.showingBook.email}</div>
-            <div>{adminBookStore.showingBook.phone}</div>
+            <div>{adminBookStore.showingBook.clientEmail}</div>
+            <div>{adminBookStore.showingBook.clientPhone}</div>
           </div>
           <div className={'mt-6 grid grid-cols-2'}>
             <div className={'grid grid-cols-restaurantInfo gap-4'}>
@@ -70,7 +70,7 @@ const ShowBookModal: FC = () => {
             </div>
             <div className={'grid grid-cols-restaurantInfo gap-4'}>
               <PersonIcon />
-              <div>{adminBookStore.showingBook.countOfPerson}</div>
+              <div>{adminBookStore.showingBook.reservedPlacesCount}</div>
               <TableRestaurantOutlinedIcon />
               <div>{adminBookStore.showingBook.numberTable}</div>
             </div>
