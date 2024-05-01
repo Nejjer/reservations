@@ -13,6 +13,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { PATHS } from '../../utils/PATHS.ts';
 import { Tables } from '../../components/Tables';
 import { BookModal } from '../../components/BookModal';
+import { Employees } from '../../components/Employees';
 
 interface Props {
   isAdmin?: boolean;
@@ -112,6 +113,7 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
         tab1={<ImageList pictures={restaurant.pictures} />}
         tab2={<Menu positions={restaurant.menu} />}
         tab3={<Tables restaurantId={+id!} />}
+        tab4={<Employees />}
       />
     </div>
   );

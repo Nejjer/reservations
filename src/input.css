@@ -12,13 +12,14 @@
 @layer base {
     input[type="date"]::-webkit-calendar-picker-indicator {
         position: absolute;
-        left: 5.5%;
+        left: 4%;
         background: url("../src/icons/calendar.svg") center center no-repeat;
         background-size: 18px;
     }
     input[type="date"] {
-        padding-left: 6%;
+        padding-left: 27px;
         padding-right: 10px;
+        position: relative;
     }
 }
 

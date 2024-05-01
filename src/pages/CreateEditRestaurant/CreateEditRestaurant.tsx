@@ -14,6 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
 import { Tables } from '../../components/Tables';
+import { Employees } from '../../components/Employees';
 
 export enum EMode {
   Create,
@@ -212,6 +213,7 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           tab3={
             mode == EMode.Edit && id && <Tables restaurantId={+id} canEdit />
           }
+          tab4={mode == EMode.Edit && <Employees canEdit />}
         />
       </div>
     </div>
