@@ -39,8 +39,11 @@ export class EmployeesApi {
     // await faker(employee);
   }
 
-  public async changeEmployee(employee: ICreateEmployee): Promise<void> {
-    await axiosInstance.put(`/admin/employees`, employee);
+  public async changeEmployee(
+    id: ID,
+    employee: ICreateEmployee,
+  ): Promise<void> {
+    await axiosInstance.put(`/admin/employees/${id}`, employee);
     // await faker(employee);
   }
 

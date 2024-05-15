@@ -21,6 +21,7 @@ export const Employees: FC<Props> = ({ canEdit, restaurantId }) => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [position, setPosition] = useState('');
+  const [changingId, setChangingId] = useState<ID | undefined>(undefined);
   const [isEdit, setIsEdit] = useState(false);
 
   const [loading, employees, fetchEmployees] = useFetch(() =>
@@ -32,8 +33,8 @@ export const Employees: FC<Props> = ({ canEdit, restaurantId }) => {
   }, []);
 
   const handleSubmitEmployee = async () => {
-    if (isEdit) {
-      await employeesApi.changeEmployee({
+    if (isEdit && changingId) {
+      await employeesApi.changeEmployee(changingId, {
         name,
         phoneNumber: phone,
         position,
@@ -51,8 +52,8 @@ export const Employees: FC<Props> = ({ canEdit, restaurantId }) => {
         password,
       });
     }
-    clearForm();
     fetchEmployees();
+    clearForm();
   };
 
   const clearForm = () => {
@@ -62,6 +63,7 @@ export const Employees: FC<Props> = ({ canEdit, restaurantId }) => {
     setEmail('');
     setIsEdit(false);
     setPassword('');
+    setChangingId(undefined);
   };
 
   const handleDeleteEmployee = async (id: ID) => {
@@ -69,13 +71,14 @@ export const Employees: FC<Props> = ({ canEdit, restaurantId }) => {
     fetchEmployees();
   };
 
-  const handleClickChangeEmployee = async (employee: IEmployee) => {
+  const handleClickChangeEmployee = async (employee: IEmployee, id: ID) => {
     setName(employee.name);
     setEmail(employee.email);
     setPosition(employee.position.toString());
     setPhone(employee.phoneNumber);
     setIsEdit(true);
     setOpenModal(true);
+    setChangingId(id);
   };
 
   if (loading) {
@@ -95,7 +98,7 @@ export const Employees: FC<Props> = ({ canEdit, restaurantId }) => {
             className={
               'flex cursor-pointer justify-between border-b border-black px-3 py-4'
             }
-            onClick={() => handleClickChangeEmployee(empl)}
+            onClick={() => handleClickChangeEmployee(empl, empl.id)}
           >
             <div>{empl.name}</div>
             <CanIcon
