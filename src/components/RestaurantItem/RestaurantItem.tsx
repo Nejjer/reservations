@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 export const RestaurantItem: FC<IRestaurant> = (restaurant) => {
   const navigate = useNavigate();
-  console.log(restaurant);
 
   return (
     <div

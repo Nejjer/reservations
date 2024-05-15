@@ -1,5 +1,4 @@
 import { axiosInstance, ID } from './axiosInstance.ts';
-import { faker } from './faker.ts';
 
 export enum EBookStatus {
   Requested,
@@ -32,6 +31,7 @@ export interface IBook {
   status: EBookStatus;
   comment: string;
   tableName: string;
+  restaurantId: ID;
 }
 
 export interface ICreateBookAdmin {
@@ -45,27 +45,27 @@ export interface ICreateBookAdmin {
   restaurantId: number;
 }
 
-const ExampleBook: IBook = {
-  reservedPlacesCount: 2,
-  clientName: 'Ибрагим Игнат',
-  date: new Date().getTime(),
-  numberTable: 7,
-  status: EBookStatus.Requested,
-  restaurantName: 'Суши у Илюши',
-  id: Math.floor(Math.random() * 1000),
-  clientPhone: '+7 987 233 21 12',
-  clientEmail: 'example.cim@ex.com',
-  comment:
-    'Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба ',
-  tableName: 'sad',
-};
+// const ExampleBook: IBook = {
+//   reservedPlacesCount: 2,
+//   clientName: 'Ибрагим Игнат',
+//   date: new Date().getTime(),
+//   numberTable: 7,
+//   status: EBookStatus.Requested,
+//   restaurantName: 'Суши у Илюши',
+//   id: Math.floor(Math.random() * 1000),
+//   clientPhone: '+7 987 233 21 12',
+//   clientEmail: 'example.cim@ex.com',
+//   comment:
+//     'Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба Рыба ',
+//   tableName: 'sad',
+// };
 
 export class BookApi {
-  public async getBook(id: string): Promise<IBook> {
-    //return (await axiosInstance.get<IBook>(`/admin/books/${id}`)).data;
-    id;
-    return faker<IBook>(ExampleBook);
-  }
+  // public async getBook(id: string): Promise<IBook> {
+  //   //return (await axiosInstance.get<IBook>(`/admin/books/${id}`)).data;
+  //   id;
+  //   return faker<IBook>(ExampleBook);
+  // }
 
   public async getBooks(): Promise<IBook[]> {
     return (await axiosInstance.get<IBook[]>(`/admin/books/`)).data;

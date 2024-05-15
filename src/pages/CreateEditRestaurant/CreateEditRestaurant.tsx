@@ -213,7 +213,7 @@ const CreateEditRestaurant: FC<Props> = ({ mode }) => {
           tab3={
             mode == EMode.Edit && id && <Tables restaurantId={+id} canEdit />
           }
-          tab4={mode == EMode.Edit && <Employees canEdit />}
+          tab4={mode == EMode.Edit && <Employees canEdit restaurantId={+id!} />}
         />
       </div>
     </div>

@@ -7,21 +7,24 @@ import { CreateButton } from '../CreateButton';
 import { Input } from '../Input';
 import CanIcon from '../../icons/can.svg?react';
 import { ID } from '../../api/axiosInstance.ts';
+import { Select } from '../Select';
 
 interface Props {
   canEdit?: boolean;
+  restaurantId: ID;
 }
 
-export const Employees: FC<Props> = ({ canEdit }) => {
+export const Employees: FC<Props> = ({ canEdit, restaurantId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [birthdate, setBirthdate] = useState('');
+  const [position, setPosition] = useState('');
   const [isEdit, setIsEdit] = useState(false);
 
-  const [loading, employees, fetchEmployees] = useFetch(
-    employeesApi.getEmployees,
+  const [loading, employees, fetchEmployees] = useFetch(() =>
+    employeesApi.getEmployees(restaurantId),
   );
 
   useEffect(() => {
@@ -32,23 +35,33 @@ export const Employees: FC<Props> = ({ canEdit }) => {
     if (isEdit) {
       await employeesApi.changeEmployee({
         name,
-        phone,
-        birthday: +birthdate,
+        phoneNumber: phone,
+        position,
         email,
+        restaurantId,
+        password,
       });
     } else {
       await employeesApi.submitEmployee({
         name,
-        phone,
-        birthday: +birthdate,
+        phoneNumber: phone,
+        position,
         email,
+        restaurantId,
+        password,
       });
     }
+    clearForm();
+    fetchEmployees();
+  };
+
+  const clearForm = () => {
     setPhone('');
-    setBirthdate('');
+    setPosition('');
     setName('');
     setEmail('');
     setIsEdit(false);
+    setPassword('');
   };
 
   const handleDeleteEmployee = async (id: ID) => {
@@ -59,8 +72,8 @@ export const Employees: FC<Props> = ({ canEdit }) => {
   const handleClickChangeEmployee = async (employee: IEmployee) => {
     setName(employee.name);
     setEmail(employee.email);
-    setBirthdate(employee.birthday.toString());
-    setPhone(employee.phone);
+    setPosition(employee.position.toString());
+    setPhone(employee.phoneNumber);
     setIsEdit(true);
     setOpenModal(true);
   };
@@ -111,7 +124,7 @@ export const Employees: FC<Props> = ({ canEdit }) => {
           buttonsClassName={
             'flex !justify-center gap-[14px] [&>*]:basis-[200px]'
           }
-          disabled={!name || !birthdate || !phone || !email}
+          disabled={!name || !position || !phone || !email || !password}
         >
           <div className={'flex flex-col gap-4'}>
             <Input
@@ -127,17 +140,26 @@ export const Employees: FC<Props> = ({ canEdit }) => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-              <Input
-                type={'date'}
-                value={birthdate}
-                className={'basis-1/2'}
-                onChange={(e) => setBirthdate(e.target.value)}
+              <Select
+                onValueChange={(value) => setPosition(value)}
+                values={[
+                  { value: 'waiter', title: 'официант' },
+                  { value: 'administrator', title: 'администратор' },
+                ]}
+                value={position}
+                className={'h-8 py-0.5'}
               />
             </div>
             <Input
               value={email}
               placeholder={'E-mail'}
               onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              value={password}
+              type={'password'}
+              placeholder={'пароль'}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
         </Dialog>

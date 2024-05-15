@@ -113,7 +113,7 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
         tab1={<ImageList pictures={restaurant.pictures} />}
         tab2={<Menu positions={restaurant.menu} />}
         tab3={<Tables restaurantId={+id!} />}
-        tab4={<Employees />}
+        tab4={<Employees restaurantId={restaurant.id} />}
       />
     </div>
   );
