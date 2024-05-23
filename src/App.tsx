@@ -6,35 +6,46 @@ import { CreateEditRestaurant, EMode } from './pages/CreateEditRestaurant';
 import { PATHS } from './utils/PATHS.ts';
 import { Profile } from './pages/Profile';
 import { BookList } from './pages/BookList';
+import { observer } from 'mobx-react';
+import { useContext } from 'react';
+import { AppStoreContext, StoreCtx } from './stores/WithStore.tsx';
+import { Role } from './stores/ProfileStore.ts';
 
 function App() {
+  const {
+    appStore: { profileStore },
+  } = useContext<AppStoreContext>(StoreCtx);
+
   return (
     <>
       <Header />
       <div className={'space-x-6'} />
       <div className={'px-6'}>
         <Routes>
-          <Route
-            path='/admin/*'
-            element={
-              <Routes>
-                <Route path='/*' element={<RestaurantList isAdmin />} />
-                <Route
-                  path={'restaurant/:id'}
-                  element={<Restaurant isAdmin />}
-                />
-                <Route
-                  path={PATHS.restaurantEdit + '/:id'}
-                  element={<CreateEditRestaurant mode={EMode.Edit} />}
-                />
-                <Route
-                  path={PATHS.restaurantCreate}
-                  element={<CreateEditRestaurant mode={EMode.Create} />}
-                />
-                <Route path={PATHS.bookList} element={<BookList />} />
-              </Routes>
-            }
-          />
+          {profileStore.role !== Role.Client && (
+            <Route
+              path='/admin/*'
+              element={
+                <Routes>
+                  <Route path='/*' element={<RestaurantList isAdmin />} />
+                  <Route
+                    path={'restaurant/:id'}
+                    element={<Restaurant isAdmin />}
+                  />
+                  <Route
+                    path={PATHS.restaurantEdit + '/:id'}
+                    element={<CreateEditRestaurant mode={EMode.Edit} />}
+                  />
+                  <Route
+                    path={PATHS.restaurantCreate}
+                    element={<CreateEditRestaurant mode={EMode.Create} />}
+                  />
+                  <Route path={PATHS.bookList} element={<BookList />} />
+                </Routes>
+              }
+            />
+          )}
+
           <Route path='/*' element={<RestaurantList />} />
           <Route path={'restaurant/:id'} element={<Restaurant />} />
           <Route path={PATHS.profile} element={<Profile />} />
@@ -44,4 +55,5 @@ function App() {
   );
 }
 
-export default App;
+const connected = observer(App);
+export { connected as App };

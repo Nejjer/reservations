@@ -4,5 +4,6 @@ export const PATHS = {
   restaurantCreate: 'restaurant/create',
   bookList: 'booklist',
   auth: 'auth',
+  authAdmin: 'authAdmin',
   profile: 'profile',
 };
