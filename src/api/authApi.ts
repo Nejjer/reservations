@@ -17,12 +17,18 @@ export class AuthApi {
     await axiosInstance.get(`/auth/login?Token=${token}`);
   }
 
-  public async authByPassword(email: string, password: string): Promise<void> {
-    try {
-      await axiosInstance.post('/auth/admin/login', { email, password });
-    } catch (e) {
-      await axiosInstance.post('/auth/employee/login', { email, password });
-    }
+  public async authByPasswordAdmin(
+    email: string,
+    password: string,
+  ): Promise<void> {
+    await axiosInstance.post('/auth/admin/login', { email, password });
+  }
+
+  public async authByPasswordEmployee(
+    email: string,
+    password: string,
+  ): Promise<void> {
+    await axiosInstance.post('/auth/employee/login', { email, password });
   }
 
   public async getProfile(): Promise<IProfile> {

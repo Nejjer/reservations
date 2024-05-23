@@ -5,5 +5,6 @@ export const PATHS = {
   bookList: 'booklist',
   auth: 'auth',
   authAdmin: 'authAdmin',
+  authEmployee: 'authEmployee',
   profile: 'profile',
 };

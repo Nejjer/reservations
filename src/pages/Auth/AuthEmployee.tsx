@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 
 interface Props {}
 
-const AuthAdmin: FC<Props> = () => {
+const AuthEmployee: FC<Props> = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValid, setIsValid] = useState(false);
@@ -37,7 +37,7 @@ const AuthAdmin: FC<Props> = () => {
     e.preventDefault();
     setIsValid(false);
     try {
-      await authApi.authByPasswordAdmin(email, password);
+      await authApi.authByPasswordEmployee(email, password);
       profileStore.update();
       navigate('/admin/');
     } catch (e) {
@@ -57,7 +57,7 @@ const AuthAdmin: FC<Props> = () => {
           className={'flex w-[320px] flex-col gap-6'}
           onSubmit={handleSubmit}
         >
-          <div className={'text-center text-2xl'}>Вход администратора</div>
+          <div className={'text-center text-2xl'}>Вход сотрудника</div>
           <Input
             value={email}
             onChange={(e) => handleEmailChange(e.target.value)}
@@ -80,7 +80,7 @@ const AuthAdmin: FC<Props> = () => {
           >
             Вход
           </Button>
-          <a href={'/authEmployee'}>Перейти на вход сотрудника</a>
+          <a href={'/authadmin'}>Перейти на вход администратора</a>
           {/* <div className={'flex justify-between'}>
               <span>Ещё нет аккаунта?</span>
               <a
@@ -97,5 +97,5 @@ const AuthAdmin: FC<Props> = () => {
   );
 };
 
-const connected = observer(AuthAdmin);
-export { connected as AuthAdmin };
+const connected = observer(AuthEmployee);
+export { connected as AuthEmployee };
