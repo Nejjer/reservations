@@ -22,7 +22,7 @@ function App() {
       <div className={'space-x-6'} />
       <div className={'px-6'}>
         <Routes>
-          {profileStore.role !== Role.Client && (
+          {profileStore.role === Role.Admin && (
             <Route
               path='/admin/*'
               element={

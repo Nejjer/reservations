@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authApi, IProfile } from '../../api/authApi.ts';
 import { PATHS } from '../../utils/PATHS.ts';
@@ -9,14 +9,21 @@ import { bookApi } from '../../api/bookApi.ts';
 import { restaurantApi } from '../../api/restaurantApi.ts';
 import { ClientBooks, IClientBooks } from '../../components/ClientBooks';
 import { DateTime } from 'luxon';
+import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
+import { observer } from 'mobx-react';
+import { Role } from '../../stores/ProfileStore.ts';
 
 interface Props {}
 
-export const Profile: FC<Props> = () => {
+const Profile: FC<Props> = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<IProfile>();
   const [loading, setLoading] = useState(false);
   const [reservations, setReservations] = useState<IClientBooks[]>([]);
+
+  const {
+    appStore: { profileStore },
+  } = useContext<AppStoreContext>(StoreCtx);
 
   useEffect(() => {
     authApi
@@ -29,8 +36,8 @@ export const Profile: FC<Props> = () => {
   }, []);
 
   useEffect(() => {
-    fetchBooks();
-  }, []);
+    profileStore.role === Role.Client && fetchBooks();
+  }, [profileStore.role]);
 
   const fetchBooks = async () => {
     setLoading(true);
@@ -91,7 +98,7 @@ export const Profile: FC<Props> = () => {
           </div>
         </div>
       )}
-      {!loading && (
+      {!loading && profileStore.role === Role.Client && (
         <div className={'mt-4 flex flex-col gap-4'}>
           <div className={'text-2xl font-bold'}>История бронирований</div>
           <div
@@ -111,3 +118,6 @@ export const Profile: FC<Props> = () => {
     </div>
   );
 };
+
+const connected = observer(Profile);
+export { connected as Profile };
