@@ -1,4 +1,4 @@
-import { axiosInstance } from './axiosInstance.ts';
+import { axiosInstance, ID } from './axiosInstance.ts';
 import { Role } from '../stores/ProfileStore.ts';
 
 export interface IProfile {
@@ -6,6 +6,7 @@ export interface IProfile {
   name: string;
   phoneNumber: string;
   role: Role;
+  restaurantId?: ID;
 }
 
 export class AuthApi {

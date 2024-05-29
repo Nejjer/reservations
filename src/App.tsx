@@ -10,8 +10,9 @@ import { observer } from 'mobx-react';
 import { useContext } from 'react';
 import { AppStoreContext, StoreCtx } from './stores/WithStore.tsx';
 import { Role } from './stores/ProfileStore.ts';
+import { EmployeeBookList } from './pages/EmployeeBookList';
 
-function App() {
+const App = () => {
   const {
     appStore: { profileStore },
   } = useContext<AppStoreContext>(StoreCtx);
@@ -22,6 +23,9 @@ function App() {
       <div className={'space-x-6'} />
       <div className={'px-6'}>
         <Routes>
+          {profileStore.role === Role.Employee && (
+            <Route path={'/employee/booklist'} element={<EmployeeBookList />} />
+          )}
           {profileStore.role === Role.Admin && (
             <Route
               path='/admin/*'
@@ -53,7 +57,7 @@ function App() {
       </div>
     </>
   );
-}
+};
 
 const connected = observer(App);
 export { connected as App };

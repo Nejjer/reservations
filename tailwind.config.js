@@ -10,6 +10,7 @@ export default {
         restaurantItem: '144px 1fr',
         restaurantInfo: '20px 1fr',
         profileInfo: '20px 1fr',
+        bookItem: '48px 1fr 48px',
       },
       animation: {
         overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',

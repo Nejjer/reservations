@@ -32,6 +32,7 @@ export interface IBook {
   comment: string;
   tableName: string;
   restaurantId: ID;
+  tableId: number;
 }
 
 export interface ICreateBookAdmin {

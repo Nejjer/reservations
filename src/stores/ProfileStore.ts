@@ -1,5 +1,6 @@
 import { authApi } from '../api/authApi.ts';
 import { makeAutoObservable, runInAction } from 'mobx';
+import { ID } from '../api/axiosInstance.ts';
 
 export enum Role {
   Admin = 'Admin',
@@ -9,6 +10,7 @@ export enum Role {
 
 export class ProfileStore {
   public role = Role.Client;
+  public restaurantId: ID | null = null;
 
   constructor() {
     this.update();
@@ -19,6 +21,7 @@ export class ProfileStore {
     const profile = await authApi.getProfile();
     runInAction(() => {
       this.role = profile.role;
+      this.restaurantId = profile.restaurantId;
     });
   }
 }

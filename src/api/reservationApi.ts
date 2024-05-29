@@ -21,7 +21,7 @@ export interface IReservation {
 class ReservationApi {
   public async getTimeSlots(id: ID, date: number): Promise<ITimeSlot[]> {
     const response = await axiosInstance.get<ITimeSlot[]>(
-      `http://localhost:5019/timeslots?RestaurantId=${id}&DateTime=${date}`,
+      `reservations/timeslots?RestaurantId=${id}&DateTime=${date}`,
     );
     return response.data;
   }
