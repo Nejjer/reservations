@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import CalendarIcon from '../../icons/calendar.svg?react';
 import WalletIcon from '../../icons/wallet20.svg?react';
 import InfoIcon from '../../icons/info20.svg?react';
@@ -14,12 +14,15 @@ import { PATHS } from '../../utils/PATHS.ts';
 import { Tables } from '../../components/Tables';
 import { BookModal } from '../../components/BookModal';
 import { Employees } from '../../components/Employees';
+import { observer } from 'mobx-react';
+import { AppStoreContext, StoreCtx } from '../../stores/WithStore.tsx';
+import { Role } from '../../stores/ProfileStore.ts';
 
 interface Props {
   isAdmin?: boolean;
 }
 
-export const Restaurant: FC<Props> = ({ isAdmin }) => {
+const Restaurant: FC<Props> = ({ isAdmin }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [openBook, setOpenBook] = useState(false);
@@ -28,6 +31,10 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
       return restaurantApi.getRestaurant(+id!, isAdmin);
     },
   );
+
+  const {
+    appStore: { profileStore },
+  } = useContext<AppStoreContext>(StoreCtx);
 
   const handleDeleteRestaurant = async () => {
     await restaurantApi.deleteRestaurant(+id!);
@@ -112,9 +119,18 @@ export const Restaurant: FC<Props> = ({ isAdmin }) => {
       <Tabs
         tab1={<ImageList pictures={restaurant.pictures} />}
         tab2={<Menu positions={restaurant.menu} />}
-        tab3={<Tables restaurantId={+id!} />}
-        tab4={<Employees restaurantId={restaurant.id} />}
+        tab3={
+          profileStore.role !== Role.Client && <Tables restaurantId={+id!} />
+        }
+        tab4={
+          profileStore.role !== Role.Client && (
+            <Employees restaurantId={restaurant.id} />
+          )
+        }
       />
     </div>
   );
 };
+
+const connected = observer(Restaurant);
+export { connected as Restaurant };

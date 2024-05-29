@@ -83,6 +83,21 @@ export class BookApi {
     // ]);
   }
 
+  public async getMyBooks(): Promise<IBook[]> {
+    return (await axiosInstance.get<IBook[]>(`/books/`)).data;
+    // return faker<IBook[]>([
+    //   ExampleBook,
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    //   { ...ExampleBook, id: Math.floor(Math.random() * 1000) },
+    // ]);
+  }
+
   public async submitBook(ReservationId: ID): Promise<void> {
     await axiosInstance.post(`/admin/books/submit`, { ReservationId });
   }

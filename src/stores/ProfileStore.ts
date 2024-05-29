@@ -10,7 +10,7 @@ export enum Role {
 
 export class ProfileStore {
   public role = Role.Client;
-  public restaurantId: ID | null = null;
+  public restaurantId: ID | undefined = undefined;
 
   constructor() {
     this.update();
@@ -20,7 +20,9 @@ export class ProfileStore {
   public async update() {
     const profile = await authApi.getProfile();
     runInAction(() => {
-      this.role = profile.role;
+      if (profile.role) {
+        this.role = profile.role;
+      }
       this.restaurantId = profile.restaurantId;
     });
   }

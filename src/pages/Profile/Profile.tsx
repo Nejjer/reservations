@@ -41,7 +41,7 @@ const Profile: FC<Props> = () => {
 
   const fetchBooks = async () => {
     setLoading(true);
-    const books = await bookApi.getBooks();
+    const books = await bookApi.getMyBooks();
     const restaurants = await Promise.all(
       books.map((book) => restaurantApi.getRestaurant(book.restaurantId)),
     );
@@ -81,7 +81,7 @@ const Profile: FC<Props> = () => {
           <p>{user.phoneNumber}</p>
         </div>
       </div>
-      {!loading && (
+      {!loading && profileStore.role === Role.Client && (
         <div className={'mt-4 flex flex-col gap-4'}>
           <div className={'text-2xl font-bold'}>Текущие бронирования</div>
           <div

@@ -27,7 +27,7 @@ class ReservationApi {
   }
 
   public async reserve(reservation: IReservation): Promise<void> {
-    await axiosInstance.post(`http://localhost:5019/reserve`, reservation);
+    await axiosInstance.post(`reservations/reserve`, reservation);
   }
 }
 
